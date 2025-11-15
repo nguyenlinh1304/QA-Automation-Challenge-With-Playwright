@@ -138,8 +138,15 @@ jobs:
 
       # Pre-TCMS run
       - name: Pre-TCMS Run
+        env:
+          KIWI_BASE_URL: ${{ env.KIWI_BASE_URL }}
+          KIWI_USERNAME: ${{ env.KIWI_USERNAME }}
+          KIWI_PASSWORD: ${{ env.KIWI_PASSWORD }}
+          KIWI_API_TOKEN: ${{ env.KIWI_API_TOKEN }}
+          KIWI_RUN_ID: ${{ env.KIWI_RUN_ID }}
         run: |
           cd "${{ steps.project_dir.outputs.PROJECT_DIR }}"
+          echo "Using KIWI_BASE_URL: $KIWI_BASE_URL"
           npx tsx scripts/pre-tcms-run/pre-tcms-run.ts
 
       # Run Playwright tests
@@ -193,6 +200,10 @@ jobs:
       # Post-TCMS run
       - name: Post-TCMS Run
         if: always()
+        env:
+          KIWI_BASE_URL: ${{ env.KIWI_BASE_URL }}
+          KIWI_USERNAME: ${{ env.KIWI_USERNAME }}
+          KIWI_PASSWORD: ${{ env.KIWI_PASSWORD }}
         run: |
           cd "${{ steps.project_dir.outputs.PROJECT_DIR }}"
           npx tsx scripts/post-tcms-run/post-tcms-run.ts
