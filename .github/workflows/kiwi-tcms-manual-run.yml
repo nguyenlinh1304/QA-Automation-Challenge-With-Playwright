@@ -53,28 +53,46 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
+      - name: Determine project directory
+        id: project_dir
+        run: |
+          if [ -d "main" ] && [ -f "main/playwright.config.ts" ]; then
+            echo "PROJECT_DIR=main" >> $GITHUB_OUTPUT
+            echo "Using main directory"
+          else
+            echo "PROJECT_DIR=." >> $GITHUB_OUTPUT
+            echo "Using root directory"
+          fi
+
       - name: Install dependencies
         env:
           BROWSER: ${{ github.event.inputs.browser || 'chromium' }}
         run: |
           npm ci
-          cd main && npm install || echo "No package.json in main, using root dependencies"
           
-          # Install browsers based on selection
-          if [ "$BROWSER" == "all" ]; then
-            echo "Installing all browsers for cross-browser testing..."
-            cd main && npx playwright install --with-deps chromium firefox webkit
-          else
-            echo "Installing $BROWSER browser..."
-            cd main && npx playwright install --with-deps $BROWSER
-          fi
+          # Install browsers based on selection (will be done in project directory)
+          echo "Browser installation will be done in project directory"
 
       - name: Install TypeScript runner and Kiwi reporter
         run: |
           npm install --save-dev tsx playwright-kiwi-reporter || echo "Dependencies may already be installed"
 
+      - name: Install Playwright browsers
+        working-directory: ${{ steps.project_dir.outputs.PROJECT_DIR }}
+        env:
+          BROWSER: ${{ github.event.inputs.browser || 'chromium' }}
+        run: |
+          # Install browsers based on selection
+          if [ "$BROWSER" == "all" ]; then
+            echo "Installing all browsers for cross-browser testing..."
+            npx playwright install --with-deps chromium firefox webkit
+          else
+            echo "Installing $BROWSER browser..."
+            npx playwright install --with-deps $BROWSER
+          fi
+
       - name: Setup environment variables
-        working-directory: ./main
+        working-directory: ${{ steps.project_dir.outputs.PROJECT_DIR }}
         env:
           KIWI_BASE_URL: ${{ secrets.KIWI_BASE_URL }}
           KIWI_USERNAME: ${{ secrets.KIWI_USERNAME }}
@@ -95,7 +113,7 @@ jobs:
           echo "BASE_URL will be read from .env files (dotenv-flow will load .env.${ENVIRONMENT} or .env)"
 
       - name: Pre-TCMS Run (Get test cases from existing run)
-        working-directory: ./main
+        working-directory: ${{ steps.project_dir.outputs.PROJECT_DIR }}
         env:
           KIWI_BASE_URL: ${{ secrets.KIWI_BASE_URL }}
           KIWI_USERNAME: ${{ secrets.KIWI_USERNAME }}
@@ -106,7 +124,7 @@ jobs:
           npx tsx scripts/pre-tcms-run/pre-tcms-run.ts
 
       - name: Run Playwright tests
-        working-directory: ./main
+        working-directory: ${{ steps.project_dir.outputs.PROJECT_DIR }}
         env:
           KIWI_BASE_URL: ${{ secrets.KIWI_BASE_URL }}
           KIWI_USERNAME: ${{ secrets.KIWI_USERNAME }}
@@ -149,8 +167,8 @@ jobs:
         with:
           name: playwright-report
           path: |
-            main/result/test-results/
-            main/tests/playwright/test-reports/
+            ${{ steps.project_dir.outputs.PROJECT_DIR }}/result/test-results/
+            ${{ steps.project_dir.outputs.PROJECT_DIR }}/tests/playwright/test-reports/
           retention-days: 30
 
       - name: Upload test videos
@@ -158,7 +176,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: playwright-videos
-          path: main/result/test-results/**/*.webm
+          path: ${{ steps.project_dir.outputs.PROJECT_DIR }}/result/test-results/**/*.webm
           retention-days: 7
 
       - name: Upload test traces
@@ -166,12 +184,12 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: playwright-traces
-          path: main/result/test-results/**/*.zip
+          path: ${{ steps.project_dir.outputs.PROJECT_DIR }}/result/test-results/**/*.zip
           retention-days: 7
 
       - name: Post-TCMS Run (Update existing run status)
         if: always()
-        working-directory: ./main
+        working-directory: ${{ steps.project_dir.outputs.PROJECT_DIR }}
         env:
           KIWI_BASE_URL: ${{ secrets.KIWI_BASE_URL }}
           KIWI_USERNAME: ${{ secrets.KIWI_USERNAME }}
@@ -184,8 +202,8 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         with:
           files: |
-            main/result/test-results/**/*.xml
-            main/tests/playwright/test-reports/**/*.xml
+            ${{ steps.project_dir.outputs.PROJECT_DIR }}/result/test-results/**/*.xml
+            ${{ steps.project_dir.outputs.PROJECT_DIR }}/tests/playwright/test-reports/**/*.xml
           check_name: 'Test Results'
           comment_mode: create_new
           report_individual_runs: true
