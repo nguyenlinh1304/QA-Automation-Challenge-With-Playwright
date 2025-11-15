@@ -20,7 +20,7 @@ const __dirname = path.dirname(__filename);
 
 // ======= Kiwi API helpers =======
 async function kiwiGet(endpoint: string): Promise<any> {
-    const res = await fetch(`${BASE_URL}/api/v2/${endpoint}`, {
+    const res = await fetch(`${BASE_URL}/runs/${endpoint}`, {
         headers: { Authorization: `Basic ${AUTH}` },
     });
     if (!res.ok) throw new Error(`GET ${endpoint} failed: ${await res.text()}`);
@@ -28,7 +28,7 @@ async function kiwiGet(endpoint: string): Promise<any> {
 }
 
 async function kiwiPost(endpoint: string, body: any): Promise<any> {
-    const res = await fetch(`${BASE_URL}/api/v2/${endpoint}`, {
+    const res = await fetch(`${BASE_URL}/runs/${endpoint}`, {
         method: 'POST',
         headers: {
             Authorization: `Basic ${AUTH}`,
