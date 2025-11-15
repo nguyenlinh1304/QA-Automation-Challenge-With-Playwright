@@ -27,7 +27,7 @@ async function kiwiPatch(endpoint: string, body: any) {
     try {
         const dirname = path.join(__dirname, '../../../..', 'tmp/kiwi');
         const runId = readFileSync(path.join(dirname, 'run-id.txt'), 'utf-8').trim();
-        await kiwiPatch(`testruns/${runId}`, {
+        await kiwiPatch(`/${runId}`, {
             status: 'completed'
         });
 

@@ -1,7 +1,0 @@
-tunnel: 02e9c8d3-dcf9-429e-9f86-3d75f9ae6096
-credentials-file: /Users/apple/.cloudflared/02e9c8d3-dcf9-429e-9f86-3d75f9ae6096.json
-
-ingress:
-  - hostname: kiwi.linhtest.win
-    service: http://localhost:80
-  - service: http_status:404
