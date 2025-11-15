@@ -36,14 +36,21 @@ env:
   NODE_VERSION: '20.x'
   KIWI_MODE: 'tcms'
   CI: true
-  KIWI_BASE_URL: 'https://admitted-allen-introduction-root.trycloudflare.com'
-  KIWI_USERNAME: 'admin'
-  KIWI_PASSWORD: '123456'
 
 jobs:
   e2e-tests:
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    services:
+      kiwi:
+        image: linhnguyen247/kiwi-custom-linhnt:latest
+        ports:
+          - 8080:8080
+        options: >-
+          --health-cmd="curl --fail http://localhost:8080/api/v2 || exit 1"
+          --health-interval=5s
+          --health-timeout=3s
+          --health-retries=20
 
     steps:
       - name: Checkout code
@@ -55,26 +62,20 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
-      # Detect project directory
       - name: Determine project directory
         id: project_dir
         run: |
           if [ -f "playwright.config.ts" ]; then
             echo "PROJECT_DIR=." >> $GITHUB_OUTPUT
-            echo "Using root directory"
           elif [ -d "main" ] && [ -f "main/playwright.config.ts" ]; then
             echo "PROJECT_DIR=main" >> $GITHUB_OUTPUT
-            echo "Using main directory"
           else
             echo "PROJECT_DIR=." >> $GITHUB_OUTPUT
-            echo "No playwright.config.ts found, default to root"
           fi
 
-      # Install dependencies
       - name: Install dependencies
         run: npm ci
 
-      # Install Playwright browsers
       - name: Install Playwright browsers
         env:
           BROWSER: ${{ github.event.inputs.browser || 'chromium' }}
@@ -87,18 +88,33 @@ jobs:
             npx playwright install --with-deps $BROWSER
           fi
 
-      # Setup Kiwi environment (public URL)
-      - name: Setup Kiwi environment
+      - name: Wait for Kiwi TCMS service
+        run: |
+          echo "Waiting for Kiwi TCMS to be ready..."
+          max_attempts=60
+          attempt=1
+          while [ $attempt -le $max_attempts ]; do
+            if curl -f -s http://localhost:8080/api/v2 > /dev/null 2>&1; then
+              echo "Kiwi TCMS is ready!"
+              exit 0
+            fi
+            echo "Attempt $attempt/$max_attempts: Waiting..."
+            sleep 2
+            attempt=$((attempt + 1))
+          done
+          echo "Kiwi TCMS failed to start"
+          exit 1
+
+      - name: Setup environment variables
         env:
           PROJECT_DIR: ${{ steps.project_dir.outputs.PROJECT_DIR }}
-          KIWI_BASE_URL: ${{ env.KIWI_BASE_URL }}
-          KIWI_USERNAME: ${{ env.KIWI_USERNAME }}
-          KIWI_PASSWORD: ${{ env.KIWI_PASSWORD }}
+          KIWI_USERNAME: ${{ secrets.KIWI_USERNAME || 'admin' }}
+          KIWI_PASSWORD: ${{ secrets.KIWI_PASSWORD || 'admin' }}
           KIWI_RUN_ID: ${{ github.event.inputs.run_id }}
           ENVIRONMENT: ${{ github.event.inputs.environment || 'test' }}
         run: |
           cd "$PROJECT_DIR"
-          echo "KIWI_BASE_URL=${KIWI_BASE_URL}" >> $GITHUB_ENV
+          echo "KIWI_BASE_URL=http://kiwi:8080" >> $GITHUB_ENV
           echo "KIWI_USERNAME=${KIWI_USERNAME}" >> $GITHUB_ENV
           echo "KIWI_PASSWORD=${KIWI_PASSWORD}" >> $GITHUB_ENV
           echo "KIWI_API_TOKEN=${KIWI_PASSWORD}" >> $GITHUB_ENV
@@ -108,20 +124,12 @@ jobs:
           echo "CI=true" >> $GITHUB_ENV
           echo "NODE_ENV=${ENVIRONMENT}" >> $GITHUB_ENV
 
-      # Pre-TCMS run
       - name: Pre-TCMS Run
-        env:
-          KIWI_BASE_URL: ${{ env.KIWI_BASE_URL }}
-          KIWI_USERNAME: ${{ env.KIWI_USERNAME }}
-          KIWI_PASSWORD: ${{ env.KIWI_PASSWORD }}
-          KIWI_API_TOKEN: ${{ env.KIWI_API_TOKEN }}
-          KIWI_RUN_ID: ${{ env.KIWI_RUN_ID }}
         run: |
           cd "${{ steps.project_dir.outputs.PROJECT_DIR }}"
-          echo "Fetching test run from KIWI_BASE_URL: $KIWI_BASE_URL"
+          echo "Using KIWI_BASE_URL: $KIWI_BASE_URL"
           npx tsx scripts/pre-tcms-run/pre-tcms-run.ts
 
-      # Run Playwright tests
       - name: Run Playwright tests
         env:
           PROJECT_DIR: ${{ steps.project_dir.outputs.PROJECT_DIR }}
@@ -142,36 +150,7 @@ jobs:
           echo "Executing: $PLAYWRIGHT_CMD"
           eval $PLAYWRIGHT_CMD
 
-      # Upload artifacts
-      - name: Upload test results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-report
-          path: |
-            ${{ steps.project_dir.outputs.PROJECT_DIR }}/result/test-results/
-            ${{ steps.project_dir.outputs.PROJECT_DIR }}/tests/playwright/test-reports/
-          retention-days: 30
-
-      - name: Upload test videos
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-videos
-          path: ${{ steps.project_dir.outputs.PROJECT_DIR }}/result/test-results/**/*.webm
-          retention-days: 7
-
-      - name: Upload test traces
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-traces
-          path: ${{ steps.project_dir.outputs.PROJECT_DIR }}/result/test-results/**/*.zip
-          retention-days: 7
-
-      # Post-TCMS run
       - name: Post-TCMS Run
-        if: always()
         env:
           KIWI_BASE_URL: ${{ env.KIWI_BASE_URL }}
           KIWI_USERNAME: ${{ env.KIWI_USERNAME }}
