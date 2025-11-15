@@ -119,14 +119,14 @@ jobs:
       - name: Setup environment variables
         env:
           PROJECT_DIR: ${{ steps.project_dir.outputs.PROJECT_DIR }}
-          KIWI_BASE_URL: ${{ secrets.KIWI_BASE_URL || 'http://localhost:8080' }}
           KIWI_USERNAME: ${{ secrets.KIWI_USERNAME || 'admin' }}
           KIWI_PASSWORD: ${{ secrets.KIWI_PASSWORD || 'admin' }}
           KIWI_RUN_ID: ${{ github.event.inputs.run_id }}
           ENVIRONMENT: ${{ github.event.inputs.environment || 'test' }}
         run: |
           cd "$PROJECT_DIR"
-          echo "KIWI_BASE_URL=${KIWI_BASE_URL}" >> $GITHUB_ENV
+          # Always use Docker container URL when running in CI with Docker
+          echo "KIWI_BASE_URL=http://localhost:8080" >> $GITHUB_ENV
           echo "KIWI_USERNAME=${KIWI_USERNAME}" >> $GITHUB_ENV
           echo "KIWI_PASSWORD=${KIWI_PASSWORD}" >> $GITHUB_ENV
           echo "KIWI_API_TOKEN=${KIWI_PASSWORD}" >> $GITHUB_ENV
