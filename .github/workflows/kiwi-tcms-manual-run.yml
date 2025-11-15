@@ -58,9 +58,11 @@ jobs:
         run: |
           if [ -d "main" ] && [ -f "main/playwright.config.ts" ]; then
             echo "PROJECT_DIR=main" >> $GITHUB_OUTPUT
+            echo "PROJECT_DIR_PATH=main" >> $GITHUB_ENV
             echo "Using main directory"
           else
             echo "PROJECT_DIR=." >> $GITHUB_OUTPUT
+            echo "PROJECT_DIR_PATH=." >> $GITHUB_ENV
             echo "Using root directory"
           fi
 
@@ -78,10 +80,15 @@ jobs:
           npm install --save-dev tsx playwright-kiwi-reporter || echo "Dependencies may already be installed"
 
       - name: Install Playwright browsers
-        working-directory: ${{ steps.project_dir.outputs.PROJECT_DIR }}
         env:
           BROWSER: ${{ github.event.inputs.browser || 'chromium' }}
+          PROJECT_DIR: ${{ steps.project_dir.outputs.PROJECT_DIR }}
         run: |
+          # Change to project directory if it exists
+          if [ -d "$PROJECT_DIR" ] && [ "$PROJECT_DIR" != "." ]; then
+            cd "$PROJECT_DIR"
+          fi
+          
           # Install browsers based on selection
           if [ "$BROWSER" == "all" ]; then
             echo "Installing all browsers for cross-browser testing..."
@@ -92,14 +99,19 @@ jobs:
           fi
 
       - name: Setup environment variables
-        working-directory: ${{ steps.project_dir.outputs.PROJECT_DIR }}
         env:
+          PROJECT_DIR: ${{ steps.project_dir.outputs.PROJECT_DIR }}
           KIWI_BASE_URL: ${{ secrets.KIWI_BASE_URL }}
           KIWI_USERNAME: ${{ secrets.KIWI_USERNAME }}
           KIWI_PASSWORD: ${{ secrets.KIWI_PASSWORD }}
           KIWI_RUN_ID: ${{ github.event.inputs.run_id }}
           ENVIRONMENT: ${{ github.event.inputs.environment || 'test' }}
         run: |
+          # Change to project directory if it exists
+          if [ -d "$PROJECT_DIR" ] && [ "$PROJECT_DIR" != "." ]; then
+            cd "$PROJECT_DIR"
+          fi
+          
           echo "KIWI_BASE_URL=${KIWI_BASE_URL}" >> $GITHUB_ENV
           echo "KIWI_USERNAME=${KIWI_USERNAME}" >> $GITHUB_ENV
           echo "KIWI_PASSWORD=${KIWI_PASSWORD}" >> $GITHUB_ENV
@@ -113,19 +125,23 @@ jobs:
           echo "BASE_URL will be read from .env files (dotenv-flow will load .env.${ENVIRONMENT} or .env)"
 
       - name: Pre-TCMS Run (Get test cases from existing run)
-        working-directory: ${{ steps.project_dir.outputs.PROJECT_DIR }}
         env:
+          PROJECT_DIR: ${{ steps.project_dir.outputs.PROJECT_DIR }}
           KIWI_BASE_URL: ${{ secrets.KIWI_BASE_URL }}
           KIWI_USERNAME: ${{ secrets.KIWI_USERNAME }}
           KIWI_PASSWORD: ${{ secrets.KIWI_PASSWORD }}
           KIWI_RUN_ID: ${{ github.event.inputs.run_id }}
           GITHUB_RUN_ID: ${{ github.run_id }}
         run: |
+          # Change to project directory if it exists
+          if [ -d "$PROJECT_DIR" ] && [ "$PROJECT_DIR" != "." ]; then
+            cd "$PROJECT_DIR"
+          fi
           npx tsx scripts/pre-tcms-run/pre-tcms-run.ts
 
       - name: Run Playwright tests
-        working-directory: ${{ steps.project_dir.outputs.PROJECT_DIR }}
         env:
+          PROJECT_DIR: ${{ steps.project_dir.outputs.PROJECT_DIR }}
           KIWI_BASE_URL: ${{ secrets.KIWI_BASE_URL }}
           KIWI_USERNAME: ${{ secrets.KIWI_USERNAME }}
           KIWI_MODE: tcms
@@ -134,6 +150,11 @@ jobs:
           RUN_PARALLEL: ${{ github.event.inputs.run_parallel }}
         continue-on-error: true
         run: |
+          # Change to project directory if it exists
+          if [ -d "$PROJECT_DIR" ] && [ "$PROJECT_DIR" != "." ]; then
+            cd "$PROJECT_DIR"
+          fi
+          
           # Build Playwright command with options
           PLAYWRIGHT_CMD="npx playwright test"
           
@@ -189,12 +210,16 @@ jobs:
 
       - name: Post-TCMS Run (Update existing run status)
         if: always()
-        working-directory: ${{ steps.project_dir.outputs.PROJECT_DIR }}
         env:
+          PROJECT_DIR: ${{ steps.project_dir.outputs.PROJECT_DIR }}
           KIWI_BASE_URL: ${{ secrets.KIWI_BASE_URL }}
           KIWI_USERNAME: ${{ secrets.KIWI_USERNAME }}
           KIWI_PASSWORD: ${{ secrets.KIWI_PASSWORD }}
         run: |
+          # Change to project directory if it exists
+          if [ -d "$PROJECT_DIR" ] && [ "$PROJECT_DIR" != "." ]; then
+            cd "$PROJECT_DIR"
+          fi
           npx tsx scripts/post-tcms-run/post-tcms-run.ts
 
       - name: Publish test results
