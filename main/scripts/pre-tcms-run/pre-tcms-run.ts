@@ -11,7 +11,7 @@ dotenv.config({
 
 const BASE_URL = process.env.KIWI_BASE_URL!;
 const AUTH = Buffer.from(
-    `${process.env.KIWI_USERNAME}:${process.env.KIWI_PASSWORD || ''}`
+    `${process.env.KIWI_USERNAME}:${process.env.KIWI_API_TOKEN}`
 ).toString('base64');
 
 // ======= Helper to resolve __dirname in ESM =======
@@ -20,7 +20,7 @@ const __dirname = path.dirname(__filename);
 
 // ======= Kiwi API helpers =======
 async function kiwiGet(endpoint: string): Promise<any> {
-    const res = await fetch(`${BASE_URL}/runs/${endpoint}`, {
+    const res = await fetch(`${BASE_URL}/api/v2/${endpoint}`, {
         headers: { Authorization: `Basic ${AUTH}` },
     });
     if (!res.ok) throw new Error(`GET ${endpoint} failed: ${await res.text()}`);
@@ -28,7 +28,7 @@ async function kiwiGet(endpoint: string): Promise<any> {
 }
 
 async function kiwiPost(endpoint: string, body: any): Promise<any> {
-    const res = await fetch(`${BASE_URL}/runs/${endpoint}`, {
+    const res = await fetch(`${BASE_URL}/api/v2/${endpoint}`, {
         method: 'POST',
         headers: {
             Authorization: `Basic ${AUTH}`,
