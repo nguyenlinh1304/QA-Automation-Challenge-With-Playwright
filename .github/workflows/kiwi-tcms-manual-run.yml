@@ -89,7 +89,7 @@ jobs:
       - name: Setup environment variables
         env:
           PROJECT_DIR: ${{ steps.project_dir.outputs.PROJECT_DIR }}
-          KIWI_BASE_URL: ${{ secrets.KIWI_BASE_URL || 'http://localhost:8080' }}
+          KIWI_BASE_URL: ${{ secrets.KIWI_BASE_URL || 'http://localhost' }}
           KIWI_USERNAME: ${{ secrets.KIWI_USERNAME || 'admin' }}
           KIWI_PASSWORD: ${{ secrets.KIWI_PASSWORD || 'admin' }}
           KIWI_RUN_ID: ${{ github.event.inputs.run_id }}
