@@ -8,7 +8,7 @@ on:
         required: true
         type: string
       environment:
-        description: 'Environment to run tests against (BASE_URL will be read from .env files)'
+        description: 'Environment to run tests against'
         required: false
         type: choice
         options:
@@ -39,7 +39,6 @@ env:
 
 jobs:
   e2e-tests:
-    name: Run E2E Tests from Kiwi TCMS Run
     runs-on: ubuntu-latest
     timeout-minutes: 60
 
@@ -53,65 +52,49 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
+      # Detect project directory
       - name: Determine project directory
         id: project_dir
         run: |
-          if [ -d "main" ] && [ -f "main/playwright.config.ts" ]; then
+          if [ -f "playwright.config.ts" ]; then
+            echo "PROJECT_DIR=." >> $GITHUB_OUTPUT
+            echo "Using root directory"
+          elif [ -d "main" ] && [ -f "main/playwright.config.ts" ]; then
             echo "PROJECT_DIR=main" >> $GITHUB_OUTPUT
-            echo "PROJECT_DIR_PATH=main" >> $GITHUB_ENV
             echo "Using main directory"
           else
             echo "PROJECT_DIR=." >> $GITHUB_OUTPUT
-            echo "PROJECT_DIR_PATH=." >> $GITHUB_ENV
-            echo "Using root directory"
-          fi
+            echo "No playwright.config.ts found, default to root"
 
+      # Install dependencies
       - name: Install dependencies
-        env:
-          BROWSER: ${{ github.event.inputs.browser || 'chromium' }}
         run: |
           npm ci
-          
-          # Install browsers based on selection (will be done in project directory)
-          echo "Browser installation will be done in project directory"
 
-      - name: Install TypeScript runner and Kiwi reporter
-        run: |
-          npm install --save-dev tsx playwright-kiwi-reporter || echo "Dependencies may already be installed"
-
+      # Install Playwright browsers
       - name: Install Playwright browsers
         env:
           BROWSER: ${{ github.event.inputs.browser || 'chromium' }}
           PROJECT_DIR: ${{ steps.project_dir.outputs.PROJECT_DIR }}
         run: |
-          # Change to project directory if it exists
-          if [ -d "$PROJECT_DIR" ] && [ "$PROJECT_DIR" != "." ]; then
-            cd "$PROJECT_DIR"
-          fi
-          
-          # Install browsers based on selection
+          cd "$PROJECT_DIR"
           if [ "$BROWSER" == "all" ]; then
-            echo "Installing all browsers for cross-browser testing..."
             npx playwright install --with-deps chromium firefox webkit
           else
-            echo "Installing $BROWSER browser..."
             npx playwright install --with-deps $BROWSER
           fi
 
+      # Setup Kiwi environment
       - name: Setup environment variables
         env:
           PROJECT_DIR: ${{ steps.project_dir.outputs.PROJECT_DIR }}
-          KIWI_BASE_URL: ${{ secrets.KIWI_BASE_URL }}
-          KIWI_USERNAME: ${{ secrets.KIWI_USERNAME }}
-          KIWI_PASSWORD: ${{ secrets.KIWI_PASSWORD }}
+          KIWI_BASE_URL: ${{ secrets.KIWI_BASE_URL || 'http://localhost:8080' }}
+          KIWI_USERNAME: ${{ secrets.KIWI_USERNAME || 'admin' }}
+          KIWI_PASSWORD: ${{ secrets.KIWI_PASSWORD || 'admin' }}
           KIWI_RUN_ID: ${{ github.event.inputs.run_id }}
           ENVIRONMENT: ${{ github.event.inputs.environment || 'test' }}
         run: |
-          # Change to project directory if it exists
-          if [ -d "$PROJECT_DIR" ] && [ "$PROJECT_DIR" != "." ]; then
-            cd "$PROJECT_DIR"
-          fi
-          
+          cd "$PROJECT_DIR"
           echo "KIWI_BASE_URL=${KIWI_BASE_URL}" >> $GITHUB_ENV
           echo "KIWI_USERNAME=${KIWI_USERNAME}" >> $GITHUB_ENV
           echo "KIWI_PASSWORD=${KIWI_PASSWORD}" >> $GITHUB_ENV
@@ -120,68 +103,35 @@ jobs:
           echo "KIWI_MODE=tcms" >> $GITHUB_ENV
           echo "CI=true" >> $GITHUB_ENV
           echo "NODE_ENV=${ENVIRONMENT}" >> $GITHUB_ENV
-          
-          echo "Environment selected: ${ENVIRONMENT}"
-          echo "BASE_URL will be read from .env files (dotenv-flow will load .env.${ENVIRONMENT} or .env)"
 
-      - name: Pre-TCMS Run (Get test cases from existing run)
-        env:
-          PROJECT_DIR: ${{ steps.project_dir.outputs.PROJECT_DIR }}
-          KIWI_BASE_URL: ${{ secrets.KIWI_BASE_URL }}
-          KIWI_USERNAME: ${{ secrets.KIWI_USERNAME }}
-          KIWI_PASSWORD: ${{ secrets.KIWI_PASSWORD }}
-          KIWI_RUN_ID: ${{ github.event.inputs.run_id }}
-          GITHUB_RUN_ID: ${{ github.run_id }}
+      # Pre-TCMS run
+      - name: Pre-TCMS Run
         run: |
-          # Change to project directory if it exists
-          if [ -d "$PROJECT_DIR" ] && [ "$PROJECT_DIR" != "." ]; then
-            cd "$PROJECT_DIR"
-          fi
+          cd "${{ steps.project_dir.outputs.PROJECT_DIR }}"
           npx tsx scripts/pre-tcms-run/pre-tcms-run.ts
 
+      # Run Playwright tests
       - name: Run Playwright tests
         env:
           PROJECT_DIR: ${{ steps.project_dir.outputs.PROJECT_DIR }}
-          KIWI_BASE_URL: ${{ secrets.KIWI_BASE_URL }}
-          KIWI_USERNAME: ${{ secrets.KIWI_USERNAME }}
-          KIWI_MODE: tcms
-          CI: true
           BROWSER: ${{ github.event.inputs.browser || 'chromium' }}
           RUN_PARALLEL: ${{ github.event.inputs.run_parallel }}
         continue-on-error: true
         run: |
-          # Change to project directory if it exists
-          if [ -d "$PROJECT_DIR" ] && [ "$PROJECT_DIR" != "." ]; then
-            cd "$PROJECT_DIR"
-          fi
-          
-          # Build Playwright command with options
+          cd "$PROJECT_DIR"
           PLAYWRIGHT_CMD="npx playwright test"
-          
-          # Set browser/project selection
           if [ "$BROWSER" == "all" ]; then
-            echo "Running cross-browser tests (all browsers: chromium, firefox, webkit)..."
             PLAYWRIGHT_CMD="$PLAYWRIGHT_CMD --project=chromium --project=firefox --project=webkit"
-          elif [ -n "$BROWSER" ] && [ "$BROWSER" != "" ]; then
-            echo "Running tests on $BROWSER browser..."
+          else
             PLAYWRIGHT_CMD="$PLAYWRIGHT_CMD --project=$BROWSER"
-          else
-            echo "Running tests on default browser (chromium)..."
-            PLAYWRIGHT_CMD="$PLAYWRIGHT_CMD --project=chromium"
           fi
-          
-          # Set parallel/sequential execution
           if [ "$RUN_PARALLEL" == "false" ]; then
-            echo "Running tests sequentially (1 worker)..."
             PLAYWRIGHT_CMD="$PLAYWRIGHT_CMD --workers=1"
-          else
-            echo "Running tests in parallel (using default workers)..."
-            # Use default workers (fullyParallel in config)
           fi
-          
           echo "Executing: $PLAYWRIGHT_CMD"
           eval $PLAYWRIGHT_CMD
 
+      # Upload artifacts
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
@@ -208,28 +158,9 @@ jobs:
           path: ${{ steps.project_dir.outputs.PROJECT_DIR }}/result/test-results/**/*.zip
           retention-days: 7
 
-      - name: Post-TCMS Run (Update existing run status)
+      # Post-TCMS run
+      - name: Post-TCMS Run
         if: always()
-        env:
-          PROJECT_DIR: ${{ steps.project_dir.outputs.PROJECT_DIR }}
-          KIWI_BASE_URL: ${{ secrets.KIWI_BASE_URL }}
-          KIWI_USERNAME: ${{ secrets.KIWI_USERNAME }}
-          KIWI_PASSWORD: ${{ secrets.KIWI_PASSWORD }}
         run: |
-          # Change to project directory if it exists
-          if [ -d "$PROJECT_DIR" ] && [ "$PROJECT_DIR" != "." ]; then
-            cd "$PROJECT_DIR"
-          fi
+          cd "${{ steps.project_dir.outputs.PROJECT_DIR }}"
           npx tsx scripts/post-tcms-run/post-tcms-run.ts
-
-      - name: Publish test results
-        if: always()
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        with:
-          files: |
-            ${{ steps.project_dir.outputs.PROJECT_DIR }}/result/test-results/**/*.xml
-            ${{ steps.project_dir.outputs.PROJECT_DIR }}/tests/playwright/test-reports/**/*.xml
-          check_name: 'Test Results'
-          comment_mode: create_new
-          report_individual_runs: true
-
