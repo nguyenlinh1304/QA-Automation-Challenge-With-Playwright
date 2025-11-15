@@ -1,10 +1,10 @@
-name: Kiwi TCMS Manual Test Run
+name: Regression Test Run
 
 on:
   workflow_dispatch:
     inputs:
       run_id:
-        description: 'Kiwi TCMS Test Run ID (existing run to execute)'
+        description: 'Regression Test Run Demo'
         required: true
         type: string
       environment:
@@ -34,24 +34,12 @@ on:
 
 env:
   NODE_VERSION: '20.x'
-  KIWI_MODE: 'tcms'
   CI: true
 
 jobs:
   e2e-tests:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    services:
-      kiwi:
-        image: linhnguyen247/kiwi-custom-linhnt:latest
-        ports:
-          - 8080:8080
-        options: >-
-          --health-cmd="curl --fail http://localhost:8080/api/v2 || exit 1"
-          --health-interval=5s
-          --health-timeout=3s
-          --health-retries=20
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -88,23 +76,6 @@ jobs:
             npx playwright install --with-deps $BROWSER
           fi
 
-      - name: Wait for Kiwi TCMS service
-        run: |
-          echo "Waiting for Kiwi TCMS to be ready..."
-          max_attempts=60
-          attempt=1
-          while [ $attempt -le $max_attempts ]; do
-            if curl -f -s http://localhost:8080/api/v2 > /dev/null 2>&1; then
-              echo "Kiwi TCMS is ready!"
-              exit 0
-            fi
-            echo "Attempt $attempt/$max_attempts: Waiting..."
-            sleep 2
-            attempt=$((attempt + 1))
-          done
-          echo "Kiwi TCMS failed to start"
-          exit 1
-
       - name: Setup environment variables
         env:
           PROJECT_DIR: ${{ steps.project_dir.outputs.PROJECT_DIR }}
@@ -114,21 +85,8 @@ jobs:
           ENVIRONMENT: ${{ github.event.inputs.environment || 'test' }}
         run: |
           cd "$PROJECT_DIR"
-          echo "KIWI_BASE_URL=http://kiwi:8080" >> $GITHUB_ENV
-          echo "KIWI_USERNAME=${KIWI_USERNAME}" >> $GITHUB_ENV
-          echo "KIWI_PASSWORD=${KIWI_PASSWORD}" >> $GITHUB_ENV
-          echo "KIWI_API_TOKEN=${KIWI_PASSWORD}" >> $GITHUB_ENV
-          echo "KIWI_RUN_ID=${KIWI_RUN_ID}" >> $GITHUB_ENV
-          echo "NEXT_PUBLIC_STAGE=${ENVIRONMENT}" >> $GITHUB_ENV
-          echo "KIWI_MODE=tcms" >> $GITHUB_ENV
           echo "CI=true" >> $GITHUB_ENV
           echo "NODE_ENV=${ENVIRONMENT}" >> $GITHUB_ENV
-
-      - name: Pre-TCMS Run
-        run: |
-          cd "${{ steps.project_dir.outputs.PROJECT_DIR }}"
-          echo "Using KIWI_BASE_URL: $KIWI_BASE_URL"
-          npx tsx scripts/pre-tcms-run/pre-tcms-run.ts
 
       - name: Run Playwright tests
         env:
@@ -138,7 +96,7 @@ jobs:
         continue-on-error: true
         run: |
           cd "$PROJECT_DIR"
-          PLAYWRIGHT_CMD="npx playwright test"
+          PLAYWRIGHT_CMD="npx playwright test --reporter=list,html"
           if [ "$BROWSER" == "all" ]; then
             PLAYWRIGHT_CMD="$PLAYWRIGHT_CMD --project=chromium --project=firefox --project=webkit"
           else
@@ -150,11 +108,32 @@ jobs:
           echo "Executing: $PLAYWRIGHT_CMD"
           eval $PLAYWRIGHT_CMD
 
-      - name: Post-TCMS Run
-        env:
-          KIWI_BASE_URL: ${{ env.KIWI_BASE_URL }}
-          KIWI_USERNAME: ${{ env.KIWI_USERNAME }}
-          KIWI_PASSWORD: ${{ env.KIWI_PASSWORD }}
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            ${{ steps.project_dir.outputs.PROJECT_DIR }}/playwright-report/
+          retention-days: 30
+
+      - name: Upload test videos
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-videos
+          path: ${{ steps.project_dir.outputs.PROJECT_DIR }}/test-results/**/*.webm
+          retention-days: 7
+
+      - name: Upload test traces
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-traces
+          path: ${{ steps.project_dir.outputs.PROJECT_DIR }}/test-results/**/*.zip
+          retention-days: 7
+
+      - name: Post Run
         run: |
           cd "${{ steps.project_dir.outputs.PROJECT_DIR }}"
           npx tsx scripts/post-tcms-run/post-tcms-run.ts
