@@ -36,6 +36,9 @@ env:
   NODE_VERSION: '20.x'
   KIWI_MODE: 'tcms'
   CI: true
+  KIWI_BASE_URL: 'https://admitted-allen-introduction-root.trycloudflare.com'
+  KIWI_USERNAME: 'admin'
+  KIWI_PASSWORD: '123456'
 
 jobs:
   e2e-tests:
@@ -69,8 +72,7 @@ jobs:
 
       # Install dependencies
       - name: Install dependencies
-        run: |
-          npm ci
+        run: npm ci
 
       # Install Playwright browsers
       - name: Install Playwright browsers
@@ -85,48 +87,18 @@ jobs:
             npx playwright install --with-deps $BROWSER
           fi
 
-      - name: Pull custom Kiwi
-        run: docker pull linhnguyen247/kiwi-custom-linhnt:latest
-
-      - name: Run custom Kiwi
-        id: kiwi_container
-        run: |
-          CONTAINER_ID=$(docker run -d -p 8080:8080 linhnguyen247/kiwi-custom-linhnt:latest)
-          echo "CONTAINER_ID=${CONTAINER_ID}" >> $GITHUB_OUTPUT
-          echo "Kiwi container started: ${CONTAINER_ID}"
-
-      - name: Wait for Kiwi to be ready
-        run: |
-          echo "Waiting for Kiwi TCMS to be ready..."
-          max_attempts=60
-          attempt=1
-          while [ $attempt -le $max_attempts ]; do
-            # Check if service responds on API endpoint
-            if curl -f -s http://localhost:8080/api/v2/ > /dev/null 2>&1; then
-              echo "Kiwi TCMS is ready!"
-              exit 0
-            fi
-            echo "Attempt $attempt/$max_attempts: Waiting for Kiwi TCMS..."
-            sleep 2
-            attempt=$((attempt + 1))
-          done
-          echo "Kiwi TCMS failed to start within 120 seconds"
-          echo "Container logs:"
-          docker logs "${{ steps.kiwi_container.outputs.CONTAINER_ID }}" || true
-          exit 1
-
-      # Setup Kiwi environment
-      - name: Setup environment variables
+      # Setup Kiwi environment (public URL)
+      - name: Setup Kiwi environment
         env:
           PROJECT_DIR: ${{ steps.project_dir.outputs.PROJECT_DIR }}
-          KIWI_USERNAME: ${{ secrets.KIWI_USERNAME || 'admin' }}
-          KIWI_PASSWORD: ${{ secrets.KIWI_PASSWORD || 'admin' }}
+          KIWI_BASE_URL: ${{ env.KIWI_BASE_URL }}
+          KIWI_USERNAME: ${{ env.KIWI_USERNAME }}
+          KIWI_PASSWORD: ${{ env.KIWI_PASSWORD }}
           KIWI_RUN_ID: ${{ github.event.inputs.run_id }}
           ENVIRONMENT: ${{ github.event.inputs.environment || 'test' }}
         run: |
           cd "$PROJECT_DIR"
-          # Always use Docker container URL when running in CI with Docker
-          echo "KIWI_BASE_URL=http://localhost:8080" >> $GITHUB_ENV
+          echo "KIWI_BASE_URL=${KIWI_BASE_URL}" >> $GITHUB_ENV
           echo "KIWI_USERNAME=${KIWI_USERNAME}" >> $GITHUB_ENV
           echo "KIWI_PASSWORD=${KIWI_PASSWORD}" >> $GITHUB_ENV
           echo "KIWI_API_TOKEN=${KIWI_PASSWORD}" >> $GITHUB_ENV
@@ -146,7 +118,7 @@ jobs:
           KIWI_RUN_ID: ${{ env.KIWI_RUN_ID }}
         run: |
           cd "${{ steps.project_dir.outputs.PROJECT_DIR }}"
-          echo "Using KIWI_BASE_URL: $KIWI_BASE_URL"
+          echo "Fetching test run from KIWI_BASE_URL: $KIWI_BASE_URL"
           npx tsx scripts/pre-tcms-run/pre-tcms-run.ts
 
       # Run Playwright tests
@@ -207,22 +179,3 @@ jobs:
         run: |
           cd "${{ steps.project_dir.outputs.PROJECT_DIR }}"
           npx tsx scripts/post-tcms-run/post-tcms-run.ts
-
-      # Cleanup Docker container
-      - name: Stop Kiwi container
-        if: always()
-        run: |
-          CONTAINER_ID="${{ steps.kiwi_container.outputs.CONTAINER_ID }}"
-          if [ -n "$CONTAINER_ID" ]; then
-            echo "Stopping Kiwi container: $CONTAINER_ID"
-            docker stop "$CONTAINER_ID" 2>/dev/null || true
-            docker rm "$CONTAINER_ID" 2>/dev/null || true
-          fi
-          # Also clean up any other containers from the same image
-          echo "Cleaning up any remaining Kiwi containers..."
-          docker ps -q --filter "ancestor=linhnguyen247/kiwi-custom-linhnt:latest" | while read id; do
-            [ -n "$id" ] && docker stop "$id" 2>/dev/null || true
-          done
-          docker ps -aq --filter "ancestor=linhnguyen247/kiwi-custom-linhnt:latest" | while read id; do
-            [ -n "$id" ] && docker rm "$id" 2>/dev/null || true
-          done
