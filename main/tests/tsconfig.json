@@ -1,0 +1,55 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "types": [
+      "@playwright/test",
+      "node"
+    ],
+    "paths": {
+      "@fixtures": [
+        "../fixtures/test"
+      ],
+      "@fixtures/*": [
+        "../fixtures/*"
+      ],
+      "@fixtures/components": [
+        "../fixtures/components/index"
+      ],
+      "@models/*": [
+        "../models/*"
+      ],
+      "@typings": [
+        "../typings/index"
+      ],
+      "@typings/*": [
+        "../typings/*"
+      ],
+      "@src/*": [
+        "../*"
+      ]
+    }
+  },
+  "include": [
+    "**/*.ts",
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "ts-node": {
+    "files": true,
+    "compilerOptions": {
+      "module": "commonjs"
+    }
+  }
+}

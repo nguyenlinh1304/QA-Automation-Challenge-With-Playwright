@@ -1,0 +1,48 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@fixtures/*": [
+                "main/fixtures/*"
+            ],
+            "@models/*": [
+                "main/models/*"
+            ],
+            "@typings": [
+                "main/typings/index"
+            ],
+            "@typings/*": [
+                "main/typings/*"
+            ],
+            "@fixtures": [
+                "main/fixtures/test"
+            ],
+            "@fixtures/components": [
+                "main/fixtures/components/index"
+            ],
+            "@src/*": [
+                "main/*"
+            ],
+        },
+        "types": [
+            "node",
+            "@playwright/test"
+        ],
+        "strict": true,
+        "resolveJsonModule": true,
+        "noEmit": true,
+        "module": "ESNext",
+        "target": "ES2020",
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "outDir": "./dist"
+    },
+    "include": [
+        "main/**/*.ts",
+        "main/tests/e2e/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}
