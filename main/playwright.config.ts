@@ -4,7 +4,7 @@ import { defineConfig, devices } from '@playwright/test';
 import path from 'path';
 
 dotenv.config({
-    node_env: process.env.CI ? 'production' : process.env.NODE_ENV || 'test',
+    node_env: process.env.NODE_ENV || (process.env.CI ? 'production' : 'test'),
 });
 
 let grep: RegExp | undefined = undefined;
