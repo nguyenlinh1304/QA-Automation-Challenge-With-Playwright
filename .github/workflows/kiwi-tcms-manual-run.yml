@@ -16,10 +16,6 @@ on:
           - staging
           - production
         default: 'test'
-      env_vars:
-        description: 'Additional environment variables (one per line, format: KEY=value)'
-        required: false
-        type: string
       browser:
         description: 'Browser to run tests on'
         required: false
@@ -35,11 +31,6 @@ on:
         required: false
         type: boolean
         default: true
-      cross_browser:
-        description: 'Run tests across all browsers (overrides browser selection)'
-        required: false
-        type: boolean
-        default: false
 
 env:
   NODE_VERSION: '20.x'
@@ -65,13 +56,12 @@ jobs:
       - name: Install dependencies
         env:
           BROWSER: ${{ github.event.inputs.browser || 'chromium' }}
-          CROSS_BROWSER: ${{ github.event.inputs.cross_browser }}
         run: |
           npm ci
           cd main && npm install || echo "No package.json in main, using root dependencies"
           
           # Install browsers based on selection
-          if [ "$CROSS_BROWSER" == "true" ] || [ "$BROWSER" == "all" ]; then
+          if [ "$BROWSER" == "all" ]; then
             echo "Installing all browsers for cross-browser testing..."
             cd main && npx playwright install --with-deps chromium firefox webkit
           else
@@ -91,7 +81,6 @@ jobs:
           KIWI_PASSWORD: ${{ secrets.KIWI_PASSWORD }}
           KIWI_RUN_ID: ${{ github.event.inputs.run_id }}
           ENVIRONMENT: ${{ github.event.inputs.environment || 'test' }}
-          ENV_VARS_INPUT: ${{ github.event.inputs.env_vars }}
         run: |
           echo "KIWI_BASE_URL=${KIWI_BASE_URL}" >> $GITHUB_ENV
           echo "KIWI_USERNAME=${KIWI_USERNAME}" >> $GITHUB_ENV
@@ -104,28 +93,6 @@ jobs:
           
           echo "Environment selected: ${ENVIRONMENT}"
           echo "BASE_URL will be read from .env files (dotenv-flow will load .env.${ENVIRONMENT} or .env)"
-          
-          # Parse and set additional environment variables
-          if [ -n "$ENV_VARS_INPUT" ]; then
-            echo "Setting additional environment variables:"
-            while IFS= read -r line || [ -n "$line" ]; do
-              # Skip empty lines and comments
-              if [ -z "$line" ] || [[ "$line" =~ ^[[:space:]]*# ]]; then
-                continue
-              fi
-              # Remove leading/trailing whitespace
-              line=$(echo "$line" | xargs)
-              # Check if line contains '='
-              if [[ "$line" == *"="* ]]; then
-                key=$(echo "$line" | cut -d'=' -f1 | xargs)
-                value=$(echo "$line" | cut -d'=' -f2- | xargs)
-                if [ -n "$key" ]; then
-                  echo "${key}=${value}" >> $GITHUB_ENV
-                  echo "  ${key}=${value}"
-                fi
-              fi
-            done <<< "$ENV_VARS_INPUT"
-          fi
 
       - name: Pre-TCMS Run (Get test cases from existing run)
         working-directory: ./main
@@ -147,14 +114,13 @@ jobs:
           CI: true
           BROWSER: ${{ github.event.inputs.browser || 'chromium' }}
           RUN_PARALLEL: ${{ github.event.inputs.run_parallel }}
-          CROSS_BROWSER: ${{ github.event.inputs.cross_browser }}
         continue-on-error: true
         run: |
           # Build Playwright command with options
           PLAYWRIGHT_CMD="npx playwright test"
           
           # Set browser/project selection
-          if [ "$CROSS_BROWSER" == "true" ] || [ "$BROWSER" == "all" ]; then
+          if [ "$BROWSER" == "all" ]; then
             echo "Running cross-browser tests (all browsers: chromium, firefox, webkit)..."
             PLAYWRIGHT_CMD="$PLAYWRIGHT_CMD --project=chromium --project=firefox --project=webkit"
           elif [ -n "$BROWSER" ] && [ "$BROWSER" != "" ]; then
