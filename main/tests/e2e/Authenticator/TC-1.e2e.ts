@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import { SignInPage } from '../../../models/pages';
 import { SIGN_IN, DASHBOARD } from '../../../configs/routes';
 
-test('[TC-1] Should successfully log in when input valid email address and password', async ({
+test('[OD-1] Should successfully log in when input valid email address and password', async ({
     page
 }) => {
     const currentPage = new SignInPage(page);

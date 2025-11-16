@@ -1,13 +1,6 @@
 {
     "name": "OrangeHRMDemo",
     "targets": {
-        "pre:kiwi-run": {
-            "executor": "nx:run-commands",
-            "options": {
-                "cwd": "main/tests/e2e",
-                "command": "pnpm ts-node -P tsconfig.json scripts/pre-tcms-run/pre-tcms-run.ts"
-            }
-        },
         "test:e2e": {
             "executor": "nx:run-commands",
             "options": {
@@ -15,25 +8,18 @@
                 "command": "playwright test"
             }
         },
-        "post:kiwi-run": {
+        "pre:qase-run": {
             "executor": "nx:run-commands",
             "options": {
-                "cwd": "main/tests/e2e",
-                "command": "pnpm ts-node -P tsconfig.json scripts/post-tcms-run/post-tcms-run.ts"
+                "cwd": "main/",
+                "command": "pnpm ts-node -P tsconfig.json scripts/pre-qase-run/index.ts"
             }
         },
-        "test:kiwi": {
-            "inputs": [
-                "default",
-                "e2e"
-            ],
+        "post:qase-run": {
             "executor": "nx:run-commands",
             "options": {
-                "cwd": "main",
-                "command": "pnpm nx test:e2e OrangeHRMDemo",
-                "env": {
-                    "KIWI_MODE": "tcms"
-                }
+                "cwd": "main/",
+                "command": "pnpm ts-node -P tsconfig.json scripts/post-qase-run/index.ts"
             }
         }
     }

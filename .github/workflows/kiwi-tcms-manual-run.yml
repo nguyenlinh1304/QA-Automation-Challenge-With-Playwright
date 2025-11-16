@@ -59,7 +59,6 @@ jobs:
             echo "PROJECT_DIR=main" >> $GITHUB_OUTPUT
           else
             echo "PROJECT_DIR=." >> $GITHUB_OUTPUT
-          fi
 
       - name: Install dependencies
         run: npm ci
@@ -79,14 +78,19 @@ jobs:
       - name: Setup environment variables
         env:
           PROJECT_DIR: ${{ steps.project_dir.outputs.PROJECT_DIR }}
-          KIWI_USERNAME: ${{ secrets.KIWI_USERNAME || 'admin' }}
-          KIWI_PASSWORD: ${{ secrets.KIWI_PASSWORD || 'admin' }}
-          KIWI_RUN_ID: ${{ github.event.inputs.run_id }}
           ENVIRONMENT: ${{ github.event.inputs.environment || 'test' }}
         run: |
           cd "$PROJECT_DIR"
           echo "CI=true" >> $GITHUB_ENV
           echo "NODE_ENV=${ENVIRONMENT}" >> $GITHUB_ENV
+          echo "QASE_MODE=testops" >> $GITHUB_ENV
+
+      - name: Pre-Qase Run
+        env:
+          PROJECT_DIR: ${{ steps.project_dir.outputs.PROJECT_DIR }}
+        run: |
+          cd "$PROJECT_DIR"
+          npx tsx scripts/pre-qase-run/index.ts
 
       - name: Run Playwright tests
         env:
@@ -96,7 +100,7 @@ jobs:
         continue-on-error: true
         run: |
           cd "$PROJECT_DIR"
-          PLAYWRIGHT_CMD="npx playwright test --reporter=list,html"
+          PLAYWRIGHT_CMD="npx playwright test --reporter=list,html,json=tmp/qase/result.json"
           if [ "$BROWSER" == "all" ]; then
             PLAYWRIGHT_CMD="$PLAYWRIGHT_CMD --project=chromium --project=firefox --project=webkit"
           else
@@ -108,6 +112,13 @@ jobs:
           echo "Executing: $PLAYWRIGHT_CMD"
           eval $PLAYWRIGHT_CMD
 
+      - name: Post-Qase Run
+        env:
+          PROJECT_DIR: ${{ steps.project_dir.outputs.PROJECT_DIR }}
+        run: |
+          cd "$PROJECT_DIR"
+          npx tsx scripts/post-qase-run/index.ts
+          
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
@@ -132,8 +143,3 @@ jobs:
           name: playwright-traces
           path: ${{ steps.project_dir.outputs.PROJECT_DIR }}/test-results/**/*.zip
           retention-days: 7
-
-      - name: Post Run
-        run: |
-          cd "${{ steps.project_dir.outputs.PROJECT_DIR }}"
-          npx tsx scripts/post-tcms-run/post-tcms-run.ts
