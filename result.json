@@ -1,0 +1,385 @@
+{
+  "config": {
+    "configFile": "/Users/apple/Desktop/DEMO/playwright.config.ts",
+    "rootDir": "/Users/apple/Desktop/DEMO/main/tests/e2e",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 3
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "result.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/Users/apple/Desktop/DEMO/main/result/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 3
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/apple/Desktop/DEMO/main/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.e2e.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/apple/Desktop/DEMO/main/result/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 3
+        },
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "/Users/apple/Desktop/DEMO/main/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.e2e.ts"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/apple/Desktop/DEMO/main/result/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 3
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/apple/Desktop/DEMO/main/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.e2e.ts"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 4,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "Authenticator/TC-1.e2e.ts",
+      "file": "Authenticator/TC-1.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "[OD-1] Should successfully log in when input valid email address and password",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 785,
+                  "error": {
+                    "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost/web/index.php/auth/login\nCall log:\n\u001b[2m  - navigating to \"http://localhost/web/index.php/auth/login\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost/web/index.php/auth/login\nCall log:\n\u001b[2m  - navigating to \"http://localhost/web/index.php/auth/login\", waiting until \"load\"\u001b[22m\n\n    at SignInPage.goto (/Users/apple/Desktop/DEMO/main/models/pages/login/login.ts:19:25)\n    at /Users/apple/Desktop/DEMO/main/tests/e2e/Authenticator/TC-1.e2e.ts:13:27\n    at /Users/apple/Desktop/DEMO/main/tests/e2e/Authenticator/TC-1.e2e.ts:12:16",
+                    "location": {
+                      "file": "/Users/apple/Desktop/DEMO/main/models/pages/login/login.ts",
+                      "column": 25,
+                      "line": 19
+                    },
+                    "snippet": "\u001b[90m   at \u001b[39m../../models/pages/login/login.ts:19\n\n\u001b[0m \u001b[90m 17 |\u001b[39m\n \u001b[90m 18 |\u001b[39m     \u001b[36masync\u001b[39m goto() {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 19 |\u001b[39m         \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mgoto(\u001b[33mSIGN_IN\u001b[39m\u001b[33m.\u001b[39mpath)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 20 |\u001b[39m     }\n \u001b[90m 21 |\u001b[39m }\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/apple/Desktop/DEMO/main/models/pages/login/login.ts",
+                        "column": 25,
+                        "line": 19
+                      },
+                      "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost/web/index.php/auth/login\nCall log:\n\u001b[2m  - navigating to \"http://localhost/web/index.php/auth/login\", waiting until \"load\"\u001b[22m\n\n\n\u001b[90m   at \u001b[39m../../models/pages/login/login.ts:19\n\n\u001b[0m \u001b[90m 17 |\u001b[39m\n \u001b[90m 18 |\u001b[39m     \u001b[36masync\u001b[39m goto() {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 19 |\u001b[39m         \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mgoto(\u001b[33mSIGN_IN\u001b[39m\u001b[33m.\u001b[39mpath)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 20 |\u001b[39m     }\n \u001b[90m 21 |\u001b[39m }\u001b[0m\n\u001b[2m    at SignInPage.goto (/Users/apple/Desktop/DEMO/main/models/pages/login/login.ts:19:25)\u001b[22m\n\u001b[2m    at /Users/apple/Desktop/DEMO/main/tests/e2e/Authenticator/TC-1.e2e.ts:13:27\u001b[22m\n\u001b[2m    at /Users/apple/Desktop/DEMO/main/tests/e2e/Authenticator/TC-1.e2e.ts:12:16\u001b[22m"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "Navigate to the page",
+                      "duration": 157,
+                      "error": {
+                        "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost/web/index.php/auth/login\nCall log:\n\u001b[2m  - navigating to \"http://localhost/web/index.php/auth/login\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost/web/index.php/auth/login\nCall log:\n\u001b[2m  - navigating to \"http://localhost/web/index.php/auth/login\", waiting until \"load\"\u001b[22m\n\n    at SignInPage.goto (/Users/apple/Desktop/DEMO/main/models/pages/login/login.ts:19:25)\n    at /Users/apple/Desktop/DEMO/main/tests/e2e/Authenticator/TC-1.e2e.ts:13:27\n    at /Users/apple/Desktop/DEMO/main/tests/e2e/Authenticator/TC-1.e2e.ts:12:16",
+                        "location": {
+                          "file": "/Users/apple/Desktop/DEMO/main/models/pages/login/login.ts",
+                          "column": 25,
+                          "line": 19
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39m../../models/pages/login/login.ts:19\n\n\u001b[0m \u001b[90m 17 |\u001b[39m\n \u001b[90m 18 |\u001b[39m     \u001b[36masync\u001b[39m goto() {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 19 |\u001b[39m         \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mgoto(\u001b[33mSIGN_IN\u001b[39m\u001b[33m.\u001b[39mpath)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 20 |\u001b[39m     }\n \u001b[90m 21 |\u001b[39m }\u001b[0m"
+                      }
+                    }
+                  ],
+                  "startTime": "2025-11-16T17:51:33.808Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--c22b7--email-address-and-password-chromium/test-failed-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--c22b7--email-address-and-password-chromium/video.webm"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--c22b7--email-address-and-password-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/apple/Desktop/DEMO/main/models/pages/login/login.ts",
+                    "column": 25,
+                    "line": 19
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "479fdd01ab8c7e5ceaf1-92824d415178f5f896b9",
+          "file": "Authenticator/TC-1.e2e.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "[OD-1] Should successfully log in when input valid email address and password",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "failed",
+                  "duration": 1941,
+                  "error": {
+                    "message": "Error: page.goto: NS_ERROR_CONNECTION_REFUSED\nCall log:\n\u001b[2m  - navigating to \"http://localhost/web/index.php/auth/login\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: NS_ERROR_CONNECTION_REFUSED\nCall log:\n\u001b[2m  - navigating to \"http://localhost/web/index.php/auth/login\", waiting until \"load\"\u001b[22m\n\n    at SignInPage.goto (/Users/apple/Desktop/DEMO/main/models/pages/login/login.ts:19:25)\n    at /Users/apple/Desktop/DEMO/main/tests/e2e/Authenticator/TC-1.e2e.ts:13:27\n    at /Users/apple/Desktop/DEMO/main/tests/e2e/Authenticator/TC-1.e2e.ts:12:16",
+                    "location": {
+                      "file": "/Users/apple/Desktop/DEMO/main/models/pages/login/login.ts",
+                      "column": 25,
+                      "line": 19
+                    },
+                    "snippet": "\u001b[90m   at \u001b[39m../../models/pages/login/login.ts:19\n\n\u001b[0m \u001b[90m 17 |\u001b[39m\n \u001b[90m 18 |\u001b[39m     \u001b[36masync\u001b[39m goto() {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 19 |\u001b[39m         \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mgoto(\u001b[33mSIGN_IN\u001b[39m\u001b[33m.\u001b[39mpath)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 20 |\u001b[39m     }\n \u001b[90m 21 |\u001b[39m }\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/apple/Desktop/DEMO/main/models/pages/login/login.ts",
+                        "column": 25,
+                        "line": 19
+                      },
+                      "message": "Error: page.goto: NS_ERROR_CONNECTION_REFUSED\nCall log:\n\u001b[2m  - navigating to \"http://localhost/web/index.php/auth/login\", waiting until \"load\"\u001b[22m\n\n\n\u001b[90m   at \u001b[39m../../models/pages/login/login.ts:19\n\n\u001b[0m \u001b[90m 17 |\u001b[39m\n \u001b[90m 18 |\u001b[39m     \u001b[36masync\u001b[39m goto() {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 19 |\u001b[39m         \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mgoto(\u001b[33mSIGN_IN\u001b[39m\u001b[33m.\u001b[39mpath)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 20 |\u001b[39m     }\n \u001b[90m 21 |\u001b[39m }\u001b[0m\n\u001b[2m    at SignInPage.goto (/Users/apple/Desktop/DEMO/main/models/pages/login/login.ts:19:25)\u001b[22m\n\u001b[2m    at /Users/apple/Desktop/DEMO/main/tests/e2e/Authenticator/TC-1.e2e.ts:13:27\u001b[22m\n\u001b[2m    at /Users/apple/Desktop/DEMO/main/tests/e2e/Authenticator/TC-1.e2e.ts:12:16\u001b[22m"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "Navigate to the page",
+                      "duration": 158,
+                      "error": {
+                        "message": "Error: page.goto: NS_ERROR_CONNECTION_REFUSED\nCall log:\n\u001b[2m  - navigating to \"http://localhost/web/index.php/auth/login\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: NS_ERROR_CONNECTION_REFUSED\nCall log:\n\u001b[2m  - navigating to \"http://localhost/web/index.php/auth/login\", waiting until \"load\"\u001b[22m\n\n    at SignInPage.goto (/Users/apple/Desktop/DEMO/main/models/pages/login/login.ts:19:25)\n    at /Users/apple/Desktop/DEMO/main/tests/e2e/Authenticator/TC-1.e2e.ts:13:27\n    at /Users/apple/Desktop/DEMO/main/tests/e2e/Authenticator/TC-1.e2e.ts:12:16",
+                        "location": {
+                          "file": "/Users/apple/Desktop/DEMO/main/models/pages/login/login.ts",
+                          "column": 25,
+                          "line": 19
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39m../../models/pages/login/login.ts:19\n\n\u001b[0m \u001b[90m 17 |\u001b[39m\n \u001b[90m 18 |\u001b[39m     \u001b[36masync\u001b[39m goto() {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 19 |\u001b[39m         \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mgoto(\u001b[33mSIGN_IN\u001b[39m\u001b[33m.\u001b[39mpath)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 20 |\u001b[39m     }\n \u001b[90m 21 |\u001b[39m }\u001b[0m"
+                      }
+                    }
+                  ],
+                  "startTime": "2025-11-16T17:51:33.804Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--c22b7--email-address-and-password-firefox/test-failed-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--c22b7--email-address-and-password-firefox/video.webm"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--c22b7--email-address-and-password-firefox/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--c22b7--email-address-and-password-firefox/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/apple/Desktop/DEMO/main/models/pages/login/login.ts",
+                    "column": 25,
+                    "line": 19
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "479fdd01ab8c7e5ceaf1-2466ce26b66c8dabc94d",
+          "file": "Authenticator/TC-1.e2e.ts",
+          "line": 5,
+          "column": 1
+        },
+        {
+          "title": "[OD-1] Should successfully log in when input valid email address and password",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 2,
+                  "status": "failed",
+                  "duration": 1833,
+                  "error": {
+                    "message": "Error: page.goto: Could not connect to the server.\nCall log:\n\u001b[2m  - navigating to \"http://localhost/web/index.php/auth/login\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: Could not connect to the server.\nCall log:\n\u001b[2m  - navigating to \"http://localhost/web/index.php/auth/login\", waiting until \"load\"\u001b[22m\n\n    at SignInPage.goto (/Users/apple/Desktop/DEMO/main/models/pages/login/login.ts:19:25)\n    at /Users/apple/Desktop/DEMO/main/tests/e2e/Authenticator/TC-1.e2e.ts:13:27\n    at /Users/apple/Desktop/DEMO/main/tests/e2e/Authenticator/TC-1.e2e.ts:12:16",
+                    "location": {
+                      "file": "/Users/apple/Desktop/DEMO/main/models/pages/login/login.ts",
+                      "column": 25,
+                      "line": 19
+                    },
+                    "snippet": "\u001b[90m   at \u001b[39m../../models/pages/login/login.ts:19\n\n\u001b[0m \u001b[90m 17 |\u001b[39m\n \u001b[90m 18 |\u001b[39m     \u001b[36masync\u001b[39m goto() {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 19 |\u001b[39m         \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mgoto(\u001b[33mSIGN_IN\u001b[39m\u001b[33m.\u001b[39mpath)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 20 |\u001b[39m     }\n \u001b[90m 21 |\u001b[39m }\u001b[0m"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/apple/Desktop/DEMO/main/models/pages/login/login.ts",
+                        "column": 25,
+                        "line": 19
+                      },
+                      "message": "Error: page.goto: Could not connect to the server.\nCall log:\n\u001b[2m  - navigating to \"http://localhost/web/index.php/auth/login\", waiting until \"load\"\u001b[22m\n\n\n\u001b[90m   at \u001b[39m../../models/pages/login/login.ts:19\n\n\u001b[0m \u001b[90m 17 |\u001b[39m\n \u001b[90m 18 |\u001b[39m     \u001b[36masync\u001b[39m goto() {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 19 |\u001b[39m         \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mgoto(\u001b[33mSIGN_IN\u001b[39m\u001b[33m.\u001b[39mpath)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 20 |\u001b[39m     }\n \u001b[90m 21 |\u001b[39m }\u001b[0m\n\u001b[2m    at SignInPage.goto (/Users/apple/Desktop/DEMO/main/models/pages/login/login.ts:19:25)\u001b[22m\n\u001b[2m    at /Users/apple/Desktop/DEMO/main/tests/e2e/Authenticator/TC-1.e2e.ts:13:27\u001b[22m\n\u001b[2m    at /Users/apple/Desktop/DEMO/main/tests/e2e/Authenticator/TC-1.e2e.ts:12:16\u001b[22m"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "Navigate to the page",
+                      "duration": 196,
+                      "error": {
+                        "message": "Error: page.goto: Could not connect to the server.\nCall log:\n\u001b[2m  - navigating to \"http://localhost/web/index.php/auth/login\", waiting until \"load\"\u001b[22m\n",
+                        "stack": "Error: page.goto: Could not connect to the server.\nCall log:\n\u001b[2m  - navigating to \"http://localhost/web/index.php/auth/login\", waiting until \"load\"\u001b[22m\n\n    at SignInPage.goto (/Users/apple/Desktop/DEMO/main/models/pages/login/login.ts:19:25)\n    at /Users/apple/Desktop/DEMO/main/tests/e2e/Authenticator/TC-1.e2e.ts:13:27\n    at /Users/apple/Desktop/DEMO/main/tests/e2e/Authenticator/TC-1.e2e.ts:12:16",
+                        "location": {
+                          "file": "/Users/apple/Desktop/DEMO/main/models/pages/login/login.ts",
+                          "column": 25,
+                          "line": 19
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39m../../models/pages/login/login.ts:19\n\n\u001b[0m \u001b[90m 17 |\u001b[39m\n \u001b[90m 18 |\u001b[39m     \u001b[36masync\u001b[39m goto() {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 19 |\u001b[39m         \u001b[36mawait\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mpage\u001b[33m.\u001b[39mgoto(\u001b[33mSIGN_IN\u001b[39m\u001b[33m.\u001b[39mpath)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                         \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 20 |\u001b[39m     }\n \u001b[90m 21 |\u001b[39m }\u001b[0m"
+                      }
+                    }
+                  ],
+                  "startTime": "2025-11-16T17:51:33.813Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--c22b7--email-address-and-password-webkit/test-failed-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--c22b7--email-address-and-password-webkit/video.webm"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--c22b7--email-address-and-password-webkit/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/apple/Desktop/DEMO/main/models/pages/login/login.ts",
+                    "column": 25,
+                    "line": 19
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "479fdd01ab8c7e5ceaf1-49e4d9626664f8fbdbb2",
+          "file": "Authenticator/TC-1.e2e.ts",
+          "line": 5,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2025-11-16T17:51:32.961Z",
+    "duration": 5345.118,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 3,
+    "flaky": 0
+  }
+}

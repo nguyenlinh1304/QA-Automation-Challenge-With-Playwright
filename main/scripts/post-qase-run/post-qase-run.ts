@@ -1,44 +1,48 @@
 import dotenv from 'dotenv-flow';
 import { QaseApi } from 'qaseio';
-import fs from 'fs';
+import fs, { readFileSync } from 'fs';
 import path from 'path';
+const OD = 'OD';
+import { fileURLToPath } from 'url';
 
-const GP = 'GP';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config({
-  node_env: process.env.CI ? 'production' : process.env.NODE_ENV || 'test',
+  path: path.join(__dirname, '../../'),
+  node_env: "test",
 });
 
 (async () => {
   try {
-    const runIdPath = path.join(process.cwd(), 'tmp/qase/run-id.txt');
-    const runId = Number(fs.readFileSync(runIdPath, 'utf-8'));
-    const resultPath = path.join(process.cwd(), 'tmp/qase/result.json');
+    const runIdPath = path.join(process.cwd(), 'main/scripts/tmp/qase/run-id.txt');
+    const runId = Number(readFileSync(
+      runIdPath.trim(),
+    ).toString()) ?? 1;
+    console.log("runId", runId)
+    const resultPath = path.join(process.cwd(), '/result.json');
     const resultRaw = fs.readFileSync(resultPath, 'utf-8');
     const testResult = JSON.parse(resultRaw);
+    console.log('Test result:', testResult?.suites?.[0]?.specs)
+    const title = testResult?.suites?.[0]?.specs?.[0]?.title
+    const tests = testResult?.suites?.[0]?.specs?.[0]?.tests
 
     const qase = new QaseApi({
       token: process.env.QASE_TESTOPS_API_TOKEN || '',
     });
 
-    for (const test of testResult.tests) {
-      // map caseId và status
-      const case_id = test.caseId; // hoặc lấy từ grep-pattern.txt
-      const status_map: Record<string, number> = {
-        passed: 1,
-        failed: 5,
-        skipped: 2,
-      };
+    for (const test of tests) {
+      const case_id = Number(title.match(/\[(?:[^\d]*)(\d+)\]/)?.[1]);
 
-      await qase.results.createResult(GP, runId, {
+      await qase.results.createResult(OD, runId, {
         case_id,
-        status: status_map[test.status]?.toString() ?? '5', // default failed
-        comment: test.error || '',
+        status: test?.results?.[0]?.status ?? "failed",
+        comment: test?.results?.[0]?.errors?.join('\n') || '',
       });
       console.log(`[post-qase-run] Posted result for case ${case_id}: ${test.status}`);
     }
 
-    await qase.runs.completeRun(GP, runId);
+    await qase.runs.completeRun(OD, runId);
     console.log('[post-qase-run] Successfully completed test run:', runId);
   } catch (e) {
     console.error('[post-qase-run] Failure message:', e);

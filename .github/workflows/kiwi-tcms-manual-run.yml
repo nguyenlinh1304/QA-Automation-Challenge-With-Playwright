@@ -89,9 +89,10 @@ jobs:
       - name: Pre-Qase Run
         env:
           PROJECT_DIR: ${{ steps.project_dir.outputs.PROJECT_DIR }}
+          QASE_TESTOPS_PLAN_ID: ${{ inputs.run_id}}
         run: |
           cd "$PROJECT_DIR"
-          npx tsx scripts/pre-qase-run/index.ts
+          npx tsx main/scripts/pre-qase-run/index.ts
 
       - name: Run Playwright tests
         env:
@@ -101,7 +102,7 @@ jobs:
         continue-on-error: true
         run: |
           cd "$PROJECT_DIR"
-          PLAYWRIGHT_CMD="npx playwright test --reporter=list,html,json=tmp/qase/result.json"
+          PLAYWRIGHT_CMD="npx playwright test"
           if [ "$BROWSER" = "all" ]; then
             PLAYWRIGHT_CMD="$PLAYWRIGHT_CMD --project=chromium --project=firefox --project=webkit"
           else
@@ -118,7 +119,7 @@ jobs:
           PROJECT_DIR: ${{ steps.project_dir.outputs.PROJECT_DIR }}
         run: |
           cd "$PROJECT_DIR"
-          npx tsx scripts/post-qase-run/index.ts
+          npx tsx main/scripts/post-qase-run/index.ts
           
       - name: Upload test results
         if: always()

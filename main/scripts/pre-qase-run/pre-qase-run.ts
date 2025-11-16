@@ -2,19 +2,26 @@ import dotenv from 'dotenv-flow';
 import { mkdirSync, writeFileSync } from 'fs';
 import path from 'path';
 import { QaseApi } from 'qaseio';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const OD = 'OD';
 
 dotenv.config({
-  node_env: process.env.CI ? 'production' : process.env.NODE_ENV || 'test',
+  path: path.join(__dirname, '../../'),
+  node_env: "test"
 });
 
 (async () => {
   try {
+    console.log("QA Key: ", process.env.QASE_TESTOPS_API_TOKEN);
     const qase = new QaseApi({
       token: process.env.QASE_TESTOPS_API_TOKEN || '',
     });
-    const planId = Number(process.env.QASE_TESTOPS_PLAN_ID || '');
+    console.log("QASE_TESTOPS_PLAN_ID: ", process.env.QASE_TESTOPS_PLAN_ID);
+    const planId = Number(process.env.QASE_TESTOPS_PLAN_ID || '1');
     const today = new Date().toLocaleString('en-GB', {
       day: '2-digit',
       month: '2-digit',
@@ -33,7 +40,7 @@ dotenv.config({
       title: `[Auto] ${today} | ${plan?.title} (PlanID: ${planId}, RunID: ${process.env.GITHUB_RUN_ID})`,
     });
 
-    const dirname = path.join(__dirname, '../../../..', 'tmp/qase');
+    const dirname = path.join(__dirname, '../', 'tmp/qase');
     mkdirSync(dirname, { recursive: true });
 
     const ids = (plan?.cases?.map((c) => c.case_id) ?? []) as number[];

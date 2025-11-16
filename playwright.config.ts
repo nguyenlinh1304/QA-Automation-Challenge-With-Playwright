@@ -40,5 +40,9 @@ export default defineConfig({
             use: { ...devices['Desktop Safari'] },
         },
     ],
+    reporter: [
+        ['list'],
+        ['json', { outputFile: 'result.json' }]
+    ],
 });
 
