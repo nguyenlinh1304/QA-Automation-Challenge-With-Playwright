@@ -59,6 +59,7 @@ jobs:
             echo "PROJECT_DIR=main" >> $GITHUB_OUTPUT
           else
             echo "PROJECT_DIR=." >> $GITHUB_OUTPUT
+          fi
 
       - name: Install dependencies
         run: npm ci
@@ -69,10 +70,10 @@ jobs:
           PROJECT_DIR: ${{ steps.project_dir.outputs.PROJECT_DIR }}
         run: |
           cd "$PROJECT_DIR"
-          if [ "$BROWSER" == "all" ]; then
+          if [ "$BROWSER" = "all" ]; then
             npx playwright install --with-deps chromium firefox webkit
           else
-            npx playwright install --with-deps $BROWSER
+            npx playwright install --with-deps "$BROWSER"
           fi
 
       - name: Setup environment variables
@@ -101,16 +102,16 @@ jobs:
         run: |
           cd "$PROJECT_DIR"
           PLAYWRIGHT_CMD="npx playwright test --reporter=list,html,json=tmp/qase/result.json"
-          if [ "$BROWSER" == "all" ]; then
+          if [ "$BROWSER" = "all" ]; then
             PLAYWRIGHT_CMD="$PLAYWRIGHT_CMD --project=chromium --project=firefox --project=webkit"
           else
             PLAYWRIGHT_CMD="$PLAYWRIGHT_CMD --project=$BROWSER"
           fi
-          if [ "$RUN_PARALLEL" == "false" ]; then
+          if [ "$RUN_PARALLEL" = "false" ]; then
             PLAYWRIGHT_CMD="$PLAYWRIGHT_CMD --workers=1"
           fi
           echo "Executing: $PLAYWRIGHT_CMD"
-          eval $PLAYWRIGHT_CMD
+          eval "$PLAYWRIGHT_CMD"
 
       - name: Post-Qase Run
         env:
