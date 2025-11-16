@@ -19,11 +19,9 @@ dotenv.config({
     const runId = Number(readFileSync(
       runIdPath.trim(),
     ).toString()) ?? 1;
-    console.log("runId", runId)
     const resultPath = path.join(process.cwd(), '/result.json');
     const resultRaw = fs.readFileSync(resultPath, 'utf-8');
     const testResult = JSON.parse(resultRaw);
-    console.log('Test result:', testResult?.suites?.[0]?.specs)
     const title = testResult?.suites?.[0]?.specs?.[0]?.title
     const tests = testResult?.suites?.[0]?.specs?.[0]?.tests
 

@@ -16,11 +16,9 @@ dotenv.config({
 
 (async () => {
   try {
-    console.log("QA Key: ", process.env.QASE_TESTOPS_API_TOKEN);
     const qase = new QaseApi({
       token: process.env.QASE_TESTOPS_API_TOKEN || '',
     });
-    console.log("QASE_TESTOPS_PLAN_ID: ", process.env.QASE_TESTOPS_PLAN_ID);
     const planId = Number(process.env.QASE_TESTOPS_PLAN_ID || '1');
     const today = new Date().toLocaleString('en-GB', {
       day: '2-digit',
@@ -42,12 +40,6 @@ dotenv.config({
 
     const dirname = path.join(__dirname, '../', 'tmp/qase');
     mkdirSync(dirname, { recursive: true });
-
-    const ids = (plan?.cases?.map((c) => c.case_id) ?? []) as number[];
-    writeFileSync(
-      path.join(dirname, 'grep-pattern.txt'),
-      `\\[${OD}-(${ids.join('|')})\\]`,
-    );
     writeFileSync(path.join(dirname, 'run-id.txt'), run?.id?.toString() ?? '');
 
     console.log(
