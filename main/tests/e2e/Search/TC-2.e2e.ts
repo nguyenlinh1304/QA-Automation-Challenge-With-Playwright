@@ -10,7 +10,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('[OD-2] Should successfully search user by Username ', async ({
-    page, request
+    page
 }) => {
     const commonPage = new CommonPage(page);
     await commonPage.clickAdminMenu();

@@ -49,7 +49,5 @@ export class UserManagementPage extends BaseModel<Elements> {
                 throw new Error(`Username mismatch: expected "${username}", found "${trimmed}"`);
             }
         }
-
-        console.log('Usernames in table:', usernames);
     }
 }
