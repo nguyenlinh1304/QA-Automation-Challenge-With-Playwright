@@ -12,6 +12,7 @@ export class SignInPage extends BaseModel<Elements> {
             username: this.ui.textField({ type: 'name', value: 'username' }),
             password: this.ui.textField({ type: 'name', value: 'password' }),
             submit: this.ui.button({ type: 'css', value: 'button[type="submit"]' }),
+            errorMessage: this.ui.errorMessage({ type: 'css', value: 'p.oxd-alert-content-text' }),
         };
     }
 

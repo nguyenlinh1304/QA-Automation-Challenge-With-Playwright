@@ -11,7 +11,7 @@
     "grepInvert": null,
     "maxFailures": 0,
     "metadata": {
-      "actualWorkers": 4
+      "actualWorkers": 1
     },
     "preserveOutput": "always",
     "reporter": [
@@ -37,7 +37,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 4
+          "actualWorkers": 1
         },
         "id": "chromium",
         "name": "chromium",
@@ -53,7 +53,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 4
+          "actualWorkers": 1
         },
         "id": "firefox",
         "name": "firefox",
@@ -69,7 +69,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 4
+          "actualWorkers": 1
         },
         "id": "webkit",
         "name": "webkit",
@@ -90,218 +90,6 @@
   },
   "suites": [
     {
-      "title": "Authenticator/TC-1.e2e.ts",
-      "file": "Authenticator/TC-1.e2e.ts",
-      "column": 0,
-      "line": 0,
-      "specs": [
-        {
-          "title": "[OD-1] Should successfully log in when input valid email address and password",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 30000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "chromium",
-              "projectName": "chromium",
-              "results": [
-                {
-                  "workerIndex": 0,
-                  "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 7405,
-                  "errors": [],
-                  "stdout": [],
-                  "stderr": [],
-                  "retry": 0,
-                  "steps": [
-                    {
-                      "title": "Navigate to the page",
-                      "duration": 3409
-                    },
-                    {
-                      "title": "Input Username",
-                      "duration": 384
-                    },
-                    {
-                      "title": "Input Password",
-                      "duration": 75
-                    },
-                    {
-                      "title": "Click Login",
-                      "duration": 2029
-                    }
-                  ],
-                  "startTime": "2025-11-17T17:12:47.576Z",
-                  "annotations": [],
-                  "attachments": [
-                    {
-                      "name": "screenshot",
-                      "contentType": "image/png",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--c22b7--email-address-and-password-chromium/test-finished-1.png"
-                    },
-                    {
-                      "name": "video",
-                      "contentType": "video/webm",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--c22b7--email-address-and-password-chromium/video.webm"
-                    },
-                    {
-                      "name": "trace",
-                      "contentType": "application/zip",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--c22b7--email-address-and-password-chromium/trace.zip"
-                    }
-                  ]
-                }
-              ],
-              "status": "expected"
-            }
-          ],
-          "id": "479fdd01ab8c7e5ceaf1-92824d415178f5f896b9",
-          "file": "Authenticator/TC-1.e2e.ts",
-          "line": 6,
-          "column": 1
-        },
-        {
-          "title": "[OD-1] Should successfully log in when input valid email address and password",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 30000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "firefox",
-              "projectName": "firefox",
-              "results": [
-                {
-                  "workerIndex": 2,
-                  "parallelIndex": 2,
-                  "status": "passed",
-                  "duration": 26683,
-                  "errors": [],
-                  "stdout": [],
-                  "stderr": [],
-                  "retry": 0,
-                  "steps": [
-                    {
-                      "title": "Navigate to the page",
-                      "duration": 16031
-                    },
-                    {
-                      "title": "Input Username",
-                      "duration": 3928
-                    },
-                    {
-                      "title": "Input Password",
-                      "duration": 38
-                    },
-                    {
-                      "title": "Click Login",
-                      "duration": 2768
-                    }
-                  ],
-                  "startTime": "2025-11-17T17:12:47.577Z",
-                  "annotations": [],
-                  "attachments": [
-                    {
-                      "name": "screenshot",
-                      "contentType": "image/png",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--c22b7--email-address-and-password-firefox/test-finished-1.png"
-                    },
-                    {
-                      "name": "video",
-                      "contentType": "video/webm",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--c22b7--email-address-and-password-firefox/video.webm"
-                    },
-                    {
-                      "name": "trace",
-                      "contentType": "application/zip",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--c22b7--email-address-and-password-firefox/trace.zip"
-                    }
-                  ]
-                }
-              ],
-              "status": "expected"
-            }
-          ],
-          "id": "479fdd01ab8c7e5ceaf1-2466ce26b66c8dabc94d",
-          "file": "Authenticator/TC-1.e2e.ts",
-          "line": 6,
-          "column": 1
-        },
-        {
-          "title": "[OD-1] Should successfully log in when input valid email address and password",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 30000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "webkit",
-              "projectName": "webkit",
-              "results": [
-                {
-                  "workerIndex": 4,
-                  "parallelIndex": 0,
-                  "status": "passed",
-                  "duration": 17062,
-                  "errors": [],
-                  "stdout": [],
-                  "stderr": [],
-                  "retry": 0,
-                  "steps": [
-                    {
-                      "title": "Navigate to the page",
-                      "duration": 8584
-                    },
-                    {
-                      "title": "Input Username",
-                      "duration": 1258
-                    },
-                    {
-                      "title": "Input Password",
-                      "duration": 94
-                    },
-                    {
-                      "title": "Click Login",
-                      "duration": 3863
-                    }
-                  ],
-                  "startTime": "2025-11-17T17:12:56.242Z",
-                  "annotations": [],
-                  "attachments": [
-                    {
-                      "name": "screenshot",
-                      "contentType": "image/png",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--c22b7--email-address-and-password-webkit/test-finished-1.png"
-                    },
-                    {
-                      "name": "video",
-                      "contentType": "video/webm",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--c22b7--email-address-and-password-webkit/video.webm"
-                    },
-                    {
-                      "name": "trace",
-                      "contentType": "application/zip",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--c22b7--email-address-and-password-webkit/trace.zip"
-                    }
-                  ]
-                }
-              ],
-              "status": "expected"
-            }
-          ],
-          "id": "479fdd01ab8c7e5ceaf1-49e4d9626664f8fbdbb2",
-          "file": "Authenticator/TC-1.e2e.ts",
-          "line": 6,
-          "column": 1
-        }
-      ]
-    },
-    {
       "title": "Search/TC-2.e2e.ts",
       "file": "Search/TC-2.e2e.ts",
       "column": 0,
@@ -309,7 +97,7 @@
       "specs": [
         {
           "title": "[OD-2] Should successfully search user by Username ",
-          "ok": false,
+          "ok": true,
           "tags": [],
           "tests": [
             {
@@ -320,44 +108,25 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
-                  "status": "failed",
-                  "duration": 14200,
-                  "error": {
-                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\nExpected: \u001b[32m\"Admin\u001b[7m123\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"Admin\"\u001b[39m",
-                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\nExpected: \u001b[32m\"Admin\u001b[7m123\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"Admin\"\u001b[39m\n    at UserManagementPage.verifyAllUsernamesMatchSearch (/Users/apple/Desktop/DEMO/main/models/pages/user-management/usermanagement.ts:47:29)\n    at /Users/apple/Desktop/DEMO/main/tests/e2e/Search/TC-2.e2e.ts:21:5",
-                    "location": {
-                      "file": "/Users/apple/Desktop/DEMO/main/models/pages/user-management/usermanagement.ts",
-                      "column": 29,
-                      "line": 47
-                    },
-                    "snippet": "\u001b[90m   at \u001b[39m../../models/pages/user-management/usermanagement.ts:47\n\n\u001b[0m \u001b[90m 45 |\u001b[39m             \u001b[36mconst\u001b[39m trimmed \u001b[33m=\u001b[39m (text \u001b[33m?\u001b[39m\u001b[33m?\u001b[39m \u001b[32m''\u001b[39m)\u001b[33m.\u001b[39mtrim()\u001b[33m;\u001b[39m\n \u001b[90m 46 |\u001b[39m             \u001b[90m// usernames.push(trimmed);\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 47 |\u001b[39m             expect(trimmed)\u001b[33m.\u001b[39mtoEqual(username)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 48 |\u001b[39m         }\n \u001b[90m 49 |\u001b[39m\n \u001b[90m 50 |\u001b[39m     }\u001b[0m"
-                  },
-                  "errors": [
-                    {
-                      "location": {
-                        "file": "/Users/apple/Desktop/DEMO/main/models/pages/user-management/usermanagement.ts",
-                        "column": 29,
-                        "line": 47
-                      },
-                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\nExpected: \u001b[32m\"Admin\u001b[7m123\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"Admin\"\u001b[39m\n\n\u001b[90m   at \u001b[39m../../models/pages/user-management/usermanagement.ts:47\n\n\u001b[0m \u001b[90m 45 |\u001b[39m             \u001b[36mconst\u001b[39m trimmed \u001b[33m=\u001b[39m (text \u001b[33m?\u001b[39m\u001b[33m?\u001b[39m \u001b[32m''\u001b[39m)\u001b[33m.\u001b[39mtrim()\u001b[33m;\u001b[39m\n \u001b[90m 46 |\u001b[39m             \u001b[90m// usernames.push(trimmed);\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 47 |\u001b[39m             expect(trimmed)\u001b[33m.\u001b[39mtoEqual(username)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 48 |\u001b[39m         }\n \u001b[90m 49 |\u001b[39m\n \u001b[90m 50 |\u001b[39m     }\u001b[0m\n\u001b[2m    at UserManagementPage.verifyAllUsernamesMatchSearch (/Users/apple/Desktop/DEMO/main/models/pages/user-management/usermanagement.ts:47:29)\u001b[22m\n\u001b[2m    at /Users/apple/Desktop/DEMO/main/tests/e2e/Search/TC-2.e2e.ts:21:5\u001b[22m"
-                    }
-                  ],
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9051,
+                  "errors": [],
                   "stdout": [
                     {
-                      "text": "All cookies: [\n  {\n    name: \u001b[32m'orangehrm'\u001b[39m,\n    value: \u001b[32m'ft2chud04e3l8r1c9g9qg9187d'\u001b[39m,\n    domain: \u001b[32m'opensource-demo.orangehrmlive.com'\u001b[39m,\n    path: \u001b[32m'/web'\u001b[39m,\n    expires: \u001b[33m-1\u001b[39m,\n    httpOnly: \u001b[33mtrue\u001b[39m,\n    secure: \u001b[33mtrue\u001b[39m,\n    sameSite: \u001b[32m'Lax'\u001b[39m\n  }\n]\n"
+                      "text": "All cookies: [\n  {\n    name: \u001b[32m'orangehrm'\u001b[39m,\n    value: \u001b[32m'bpb1a5m1a4ohk98riul2nttisc'\u001b[39m,\n    domain: \u001b[32m'opensource-demo.orangehrmlive.com'\u001b[39m,\n    path: \u001b[32m'/web'\u001b[39m,\n    expires: \u001b[33m-1\u001b[39m,\n    httpOnly: \u001b[33mtrue\u001b[39m,\n    secure: \u001b[33mtrue\u001b[39m,\n    sameSite: \u001b[32m'Lax'\u001b[39m\n  }\n]\n"
                     }
                   ],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2025-11-17T17:12:47.573Z",
+                  "startTime": "2025-11-17T18:54:37.016Z",
                   "annotations": [],
                   "attachments": [
                     {
                       "name": "screenshot",
                       "contentType": "image/png",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Search-TC-2.e2e.ts--OD-2-S-e0722-ly-search-user-by-Username--chromium/test-failed-1.png"
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Search-TC-2.e2e.ts--OD-2-S-e0722-ly-search-user-by-Username--chromium/test-finished-1.png"
                     },
                     {
                       "name": "video",
@@ -365,193 +134,17 @@
                       "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Search-TC-2.e2e.ts--OD-2-S-e0722-ly-search-user-by-Username--chromium/video.webm"
                     },
                     {
-                      "name": "error-context",
-                      "contentType": "text/markdown",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Search-TC-2.e2e.ts--OD-2-S-e0722-ly-search-user-by-Username--chromium/error-context.md"
-                    },
-                    {
                       "name": "trace",
                       "contentType": "application/zip",
                       "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Search-TC-2.e2e.ts--OD-2-S-e0722-ly-search-user-by-Username--chromium/trace.zip"
                     }
-                  ],
-                  "errorLocation": {
-                    "file": "/Users/apple/Desktop/DEMO/main/models/pages/user-management/usermanagement.ts",
-                    "column": 29,
-                    "line": 47
-                  }
+                  ]
                 }
               ],
-              "status": "unexpected"
+              "status": "expected"
             }
           ],
           "id": "bb0e6cfe715731fcad6a-84910523b2184a99bac8",
-          "file": "Search/TC-2.e2e.ts",
-          "line": 12,
-          "column": 1
-        },
-        {
-          "title": "[OD-2] Should successfully search user by Username ",
-          "ok": false,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 30000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "firefox",
-              "projectName": "firefox",
-              "results": [
-                {
-                  "workerIndex": 3,
-                  "parallelIndex": 3,
-                  "status": "failed",
-                  "duration": 17532,
-                  "error": {
-                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\nExpected: \u001b[32m\"Admin\u001b[7m123\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"Admin\"\u001b[39m",
-                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\nExpected: \u001b[32m\"Admin\u001b[7m123\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"Admin\"\u001b[39m\n    at UserManagementPage.verifyAllUsernamesMatchSearch (/Users/apple/Desktop/DEMO/main/models/pages/user-management/usermanagement.ts:47:29)\n    at /Users/apple/Desktop/DEMO/main/tests/e2e/Search/TC-2.e2e.ts:21:5",
-                    "location": {
-                      "file": "/Users/apple/Desktop/DEMO/main/models/pages/user-management/usermanagement.ts",
-                      "column": 29,
-                      "line": 47
-                    },
-                    "snippet": "\u001b[90m   at \u001b[39m../../models/pages/user-management/usermanagement.ts:47\n\n\u001b[0m \u001b[90m 45 |\u001b[39m             \u001b[36mconst\u001b[39m trimmed \u001b[33m=\u001b[39m (text \u001b[33m?\u001b[39m\u001b[33m?\u001b[39m \u001b[32m''\u001b[39m)\u001b[33m.\u001b[39mtrim()\u001b[33m;\u001b[39m\n \u001b[90m 46 |\u001b[39m             \u001b[90m// usernames.push(trimmed);\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 47 |\u001b[39m             expect(trimmed)\u001b[33m.\u001b[39mtoEqual(username)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 48 |\u001b[39m         }\n \u001b[90m 49 |\u001b[39m\n \u001b[90m 50 |\u001b[39m     }\u001b[0m"
-                  },
-                  "errors": [
-                    {
-                      "location": {
-                        "file": "/Users/apple/Desktop/DEMO/main/models/pages/user-management/usermanagement.ts",
-                        "column": 29,
-                        "line": 47
-                      },
-                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\nExpected: \u001b[32m\"Admin\u001b[7m123\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"Admin\"\u001b[39m\n\n\u001b[90m   at \u001b[39m../../models/pages/user-management/usermanagement.ts:47\n\n\u001b[0m \u001b[90m 45 |\u001b[39m             \u001b[36mconst\u001b[39m trimmed \u001b[33m=\u001b[39m (text \u001b[33m?\u001b[39m\u001b[33m?\u001b[39m \u001b[32m''\u001b[39m)\u001b[33m.\u001b[39mtrim()\u001b[33m;\u001b[39m\n \u001b[90m 46 |\u001b[39m             \u001b[90m// usernames.push(trimmed);\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 47 |\u001b[39m             expect(trimmed)\u001b[33m.\u001b[39mtoEqual(username)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 48 |\u001b[39m         }\n \u001b[90m 49 |\u001b[39m\n \u001b[90m 50 |\u001b[39m     }\u001b[0m\n\u001b[2m    at UserManagementPage.verifyAllUsernamesMatchSearch (/Users/apple/Desktop/DEMO/main/models/pages/user-management/usermanagement.ts:47:29)\u001b[22m\n\u001b[2m    at /Users/apple/Desktop/DEMO/main/tests/e2e/Search/TC-2.e2e.ts:21:5\u001b[22m"
-                    }
-                  ],
-                  "stdout": [
-                    {
-                      "text": "All cookies: [\n  {\n    name: \u001b[32m'orangehrm'\u001b[39m,\n    value: \u001b[32m'8gkcaq7biqqfl0fldtdp5a8soh'\u001b[39m,\n    domain: \u001b[32m'opensource-demo.orangehrmlive.com'\u001b[39m,\n    path: \u001b[32m'/web'\u001b[39m,\n    expires: \u001b[33m-1\u001b[39m,\n    httpOnly: \u001b[33mtrue\u001b[39m,\n    secure: \u001b[33mtrue\u001b[39m,\n    sameSite: \u001b[32m'Lax'\u001b[39m\n  }\n]\n"
-                    }
-                  ],
-                  "stderr": [],
-                  "retry": 0,
-                  "startTime": "2025-11-17T17:12:47.585Z",
-                  "annotations": [],
-                  "attachments": [
-                    {
-                      "name": "screenshot",
-                      "contentType": "image/png",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Search-TC-2.e2e.ts--OD-2-S-e0722-ly-search-user-by-Username--firefox/test-failed-1.png"
-                    },
-                    {
-                      "name": "video",
-                      "contentType": "video/webm",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Search-TC-2.e2e.ts--OD-2-S-e0722-ly-search-user-by-Username--firefox/video.webm"
-                    },
-                    {
-                      "name": "error-context",
-                      "contentType": "text/markdown",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Search-TC-2.e2e.ts--OD-2-S-e0722-ly-search-user-by-Username--firefox/error-context.md"
-                    },
-                    {
-                      "name": "trace",
-                      "contentType": "application/zip",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Search-TC-2.e2e.ts--OD-2-S-e0722-ly-search-user-by-Username--firefox/trace.zip"
-                    }
-                  ],
-                  "errorLocation": {
-                    "file": "/Users/apple/Desktop/DEMO/main/models/pages/user-management/usermanagement.ts",
-                    "column": 29,
-                    "line": 47
-                  }
-                }
-              ],
-              "status": "unexpected"
-            }
-          ],
-          "id": "bb0e6cfe715731fcad6a-b82ed50a3fb3c447d87f",
-          "file": "Search/TC-2.e2e.ts",
-          "line": 12,
-          "column": 1
-        },
-        {
-          "title": "[OD-2] Should successfully search user by Username ",
-          "ok": false,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 30000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "webkit",
-              "projectName": "webkit",
-              "results": [
-                {
-                  "workerIndex": 5,
-                  "parallelIndex": 1,
-                  "status": "failed",
-                  "duration": 19753,
-                  "error": {
-                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\nExpected: \u001b[32m\"Admin\u001b[7m123\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"Admin\"\u001b[39m",
-                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\nExpected: \u001b[32m\"Admin\u001b[7m123\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"Admin\"\u001b[39m\n    at UserManagementPage.verifyAllUsernamesMatchSearch (/Users/apple/Desktop/DEMO/main/models/pages/user-management/usermanagement.ts:47:29)\n    at /Users/apple/Desktop/DEMO/main/tests/e2e/Search/TC-2.e2e.ts:21:5",
-                    "location": {
-                      "file": "/Users/apple/Desktop/DEMO/main/models/pages/user-management/usermanagement.ts",
-                      "column": 29,
-                      "line": 47
-                    },
-                    "snippet": "\u001b[90m   at \u001b[39m../../models/pages/user-management/usermanagement.ts:47\n\n\u001b[0m \u001b[90m 45 |\u001b[39m             \u001b[36mconst\u001b[39m trimmed \u001b[33m=\u001b[39m (text \u001b[33m?\u001b[39m\u001b[33m?\u001b[39m \u001b[32m''\u001b[39m)\u001b[33m.\u001b[39mtrim()\u001b[33m;\u001b[39m\n \u001b[90m 46 |\u001b[39m             \u001b[90m// usernames.push(trimmed);\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 47 |\u001b[39m             expect(trimmed)\u001b[33m.\u001b[39mtoEqual(username)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 48 |\u001b[39m         }\n \u001b[90m 49 |\u001b[39m\n \u001b[90m 50 |\u001b[39m     }\u001b[0m"
-                  },
-                  "errors": [
-                    {
-                      "location": {
-                        "file": "/Users/apple/Desktop/DEMO/main/models/pages/user-management/usermanagement.ts",
-                        "column": 29,
-                        "line": 47
-                      },
-                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\nExpected: \u001b[32m\"Admin\u001b[7m123\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"Admin\"\u001b[39m\n\n\u001b[90m   at \u001b[39m../../models/pages/user-management/usermanagement.ts:47\n\n\u001b[0m \u001b[90m 45 |\u001b[39m             \u001b[36mconst\u001b[39m trimmed \u001b[33m=\u001b[39m (text \u001b[33m?\u001b[39m\u001b[33m?\u001b[39m \u001b[32m''\u001b[39m)\u001b[33m.\u001b[39mtrim()\u001b[33m;\u001b[39m\n \u001b[90m 46 |\u001b[39m             \u001b[90m// usernames.push(trimmed);\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 47 |\u001b[39m             expect(trimmed)\u001b[33m.\u001b[39mtoEqual(username)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                             \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 48 |\u001b[39m         }\n \u001b[90m 49 |\u001b[39m\n \u001b[90m 50 |\u001b[39m     }\u001b[0m\n\u001b[2m    at UserManagementPage.verifyAllUsernamesMatchSearch (/Users/apple/Desktop/DEMO/main/models/pages/user-management/usermanagement.ts:47:29)\u001b[22m\n\u001b[2m    at /Users/apple/Desktop/DEMO/main/tests/e2e/Search/TC-2.e2e.ts:21:5\u001b[22m"
-                    }
-                  ],
-                  "stdout": [
-                    {
-                      "text": "All cookies: [\n  {\n    name: \u001b[32m'orangehrm'\u001b[39m,\n    value: \u001b[32m'2ve484ot4moin6nb3h5ru64fgt'\u001b[39m,\n    domain: \u001b[32m'opensource-demo.orangehrmlive.com'\u001b[39m,\n    path: \u001b[32m'/web'\u001b[39m,\n    expires: \u001b[33m-1\u001b[39m,\n    httpOnly: \u001b[33mtrue\u001b[39m,\n    secure: \u001b[33mtrue\u001b[39m,\n    sameSite: \u001b[32m'Lax'\u001b[39m\n  }\n]\n"
-                    }
-                  ],
-                  "stderr": [],
-                  "retry": 0,
-                  "startTime": "2025-11-17T17:13:03.206Z",
-                  "annotations": [],
-                  "attachments": [
-                    {
-                      "name": "screenshot",
-                      "contentType": "image/png",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Search-TC-2.e2e.ts--OD-2-S-e0722-ly-search-user-by-Username--webkit/test-failed-1.png"
-                    },
-                    {
-                      "name": "video",
-                      "contentType": "video/webm",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Search-TC-2.e2e.ts--OD-2-S-e0722-ly-search-user-by-Username--webkit/video.webm"
-                    },
-                    {
-                      "name": "error-context",
-                      "contentType": "text/markdown",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Search-TC-2.e2e.ts--OD-2-S-e0722-ly-search-user-by-Username--webkit/error-context.md"
-                    },
-                    {
-                      "name": "trace",
-                      "contentType": "application/zip",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Search-TC-2.e2e.ts--OD-2-S-e0722-ly-search-user-by-Username--webkit/trace.zip"
-                    }
-                  ],
-                  "errorLocation": {
-                    "file": "/Users/apple/Desktop/DEMO/main/models/pages/user-management/usermanagement.ts",
-                    "column": 29,
-                    "line": 47
-                  }
-                }
-              ],
-              "status": "unexpected"
-            }
-          ],
-          "id": "bb0e6cfe715731fcad6a-dd96c623460e740ca29b",
           "file": "Search/TC-2.e2e.ts",
           "line": 12,
           "column": 1
@@ -561,11 +154,11 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-11-17T17:12:46.526Z",
-    "duration": 37004.140999999996,
-    "expected": 3,
+    "startTime": "2025-11-17T18:54:35.511Z",
+    "duration": 11081.449999999953,
+    "expected": 1,
     "skipped": 0,
-    "unexpected": 3,
+    "unexpected": 0,
     "flaky": 0
   }
 }
