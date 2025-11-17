@@ -3,8 +3,8 @@ name: Regression Test Run
 on:
   workflow_dispatch:
     inputs:
-      run_id:
-        description: 'Regression Test Run Demo'
+      plan_id:
+        description: 'Regression Test Plan'
         required: true
         type: string
       environment:
@@ -89,7 +89,7 @@ jobs:
       - name: Pre-Qase Run
         env:
           PROJECT_DIR: ${{ steps.project_dir.outputs.PROJECT_DIR }}
-          QASE_TESTOPS_PLAN_ID: ${{ inputs.run_id}}
+          QASE_TESTOPS_PLAN_ID: ${{ inputs.plan_id}}
         run: |
           cd "$PROJECT_DIR"
           npx tsx main/scripts/pre-qase-run/index.ts
