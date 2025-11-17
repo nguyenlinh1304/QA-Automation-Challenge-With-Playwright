@@ -22,22 +22,24 @@ dotenv.config({
     const resultPath = path.join(process.cwd(), '/result.json');
     const resultRaw = fs.readFileSync(resultPath, 'utf-8');
     const testResult = JSON.parse(resultRaw);
-    const title = testResult?.suites?.[0]?.specs?.[0]?.title
-    const tests = testResult?.suites?.[0]?.specs?.[0]?.tests
-
     const qase = new QaseApi({
       token: process.env.QASE_TESTOPS_API_TOKEN || '',
     });
+    for (const suite of testResult?.suites) {
+      const title = suite?.specs?.[0]?.title
+      console.log('Title:', title);
+      const tests = suite?.specs?.[0]?.tests
 
-    for (const test of tests) {
-      const case_id = Number(title.match(/\[(?:[^\d]*)(\d+)\]/)?.[1]);
+      for (const test of tests) {
+        const case_id = Number(title.match(/\[(?:[^\d]*)(\d+)\]/)?.[1]);
 
-      await qase.results.createResult(OD, runId, {
-        case_id,
-        status: test?.results?.[0]?.status ?? "failed",
-        comment: test?.results?.[0]?.errors?.join('\n') || '',
-      });
-      console.log(`[post-qase-run] Posted result for case ${case_id}: ${test.status}`);
+        await qase.results.createResult(OD, runId, {
+          case_id,
+          status: test?.results?.[0]?.status ?? "failed",
+          comment: test?.results?.[0]?.errors?.join('\n') || '',
+        });
+        console.log(`[post-qase-run] Posted result for case ${case_id}: ${test.status}`);
+      }
     }
 
     await qase.runs.completeRun(OD, runId);
