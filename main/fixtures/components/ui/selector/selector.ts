@@ -7,6 +7,7 @@ export type Selector =
     | { type: 'xpath'; value: string }
     | { type: 'text'; value: string }
     | { type: 'name'; value: string }
+    | { type: 'label'; value: string }
 
 export const resolveSelector = (page: Page, selector: Selector): Locator => {
     switch (selector.type) {
@@ -22,6 +23,8 @@ export const resolveSelector = (page: Page, selector: Selector): Locator => {
             return page.locator(selector.value);
         case 'name':
             return page.locator(`[name="${selector.value}"]`);
+        case 'label':
+            return page.locator(`label:has-text("${selector.value}")`);
         default:
             throw new Error(`Unknown selector type: ${(selector as any).type}`);
     }

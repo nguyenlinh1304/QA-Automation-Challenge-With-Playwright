@@ -1,6 +1,6 @@
 {
   "config": {
-    "configFile": "/Users/apple/Desktop/DEMO/playwright.config.ts",
+    "configFile": "/Users/apple/Desktop/DEMO/main/playwright.config.ts",
     "rootDir": "/Users/apple/Desktop/DEMO/main/tests/e2e",
     "forbidOnly": false,
     "fullyParallel": true,
@@ -11,7 +11,7 @@
     "grepInvert": null,
     "maxFailures": 0,
     "metadata": {
-      "actualWorkers": 1
+      "actualWorkers": 2
     },
     "preserveOutput": "always",
     "reporter": [
@@ -37,7 +37,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 1
+          "actualWorkers": 2
         },
         "id": "chromium",
         "name": "chromium",
@@ -53,7 +53,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 1
+          "actualWorkers": 2
         },
         "id": "firefox",
         "name": "firefox",
@@ -69,7 +69,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 1
+          "actualWorkers": 2
         },
         "id": "webkit",
         "name": "webkit",
@@ -108,10 +108,10 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 1,
+                  "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 16995,
+                  "duration": 22204,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
@@ -119,22 +119,22 @@
                   "steps": [
                     {
                       "title": "Navigate to the page",
-                      "duration": 10677
+                      "duration": 14543
                     },
                     {
                       "title": "Input Username",
-                      "duration": 2863
+                      "duration": 3485
                     },
                     {
                       "title": "Input Password",
-                      "duration": 80
+                      "duration": 73
                     },
                     {
                       "title": "Click Login",
-                      "duration": 2297
+                      "duration": 2438
                     }
                   ],
-                  "startTime": "2025-11-17T01:26:57.739Z",
+                  "startTime": "2025-11-17T15:54:51.078Z",
                   "annotations": [],
                   "attachments": [
                     {
@@ -164,13 +164,78 @@
           "column": 1
         }
       ]
+    },
+    {
+      "title": "Search/TC-3.e2e.ts",
+      "file": "Search/TC-3.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "[OD-3] Should successfully search user by Username ",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 30274,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "All cookies: [\n  {\n    name: \u001b[32m'orangehrm'\u001b[39m,\n    value: \u001b[32m'9fn4k5rsi59onlk67i7viho09u'\u001b[39m,\n    domain: \u001b[32m'opensource-demo.orangehrmlive.com'\u001b[39m,\n    path: \u001b[32m'/web'\u001b[39m,\n    expires: \u001b[33m-1\u001b[39m,\n    httpOnly: \u001b[33mtrue\u001b[39m,\n    secure: \u001b[33mtrue\u001b[39m,\n    sameSite: \u001b[32m'Lax'\u001b[39m\n  }\n]\n"
+                    },
+                    {
+                      "text": "Usernames in table: [ \u001b[32m'Admin'\u001b[39m ]\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-11-17T15:54:51.081Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Search-TC-3.e2e.ts--OD-3-S-c20b2-ly-search-user-by-Username--chromium/test-finished-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Search-TC-3.e2e.ts--OD-3-S-c20b2-ly-search-user-by-Username--chromium/video.webm"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Search-TC-3.e2e.ts--OD-3-S-c20b2-ly-search-user-by-Username--chromium/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7e6ac7286be477dba057-8f4b8cc986e75711ad28",
+          "file": "Search/TC-3.e2e.ts",
+          "line": 12,
+          "column": 1
+        }
+      ]
     }
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-11-17T01:26:56.271Z",
-    "duration": 18885.063999999984,
-    "expected": 1,
+    "startTime": "2025-11-17T15:54:49.272Z",
+    "duration": 32819.74100000004,
+    "expected": 2,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

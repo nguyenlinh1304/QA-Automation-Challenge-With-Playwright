@@ -25,7 +25,7 @@ export class Select<T extends OptionIdType> extends BaseComponent {
         let optionLocator: Locator
         switch (this.selector.type) {
             case 'datatestId':
-                optionLocator = this.page.getByTestId(`${this.selector.value}-optionId-${id}`);
+                optionLocator = this.locator.getByTestId(`${this.selector.value}-optionId-${id}`);
                 break;
             case 'css':
                 optionLocator = this.locator.locator(`[data-option-id="${id}"]`);
@@ -35,6 +35,12 @@ export class Select<T extends OptionIdType> extends BaseComponent {
                 break;
             case 'xpath':
                 optionLocator = this.locator.locator(`xpath=.//*[@data-option-id="${id}"]`);
+                break;
+            case 'text':
+                optionLocator = this.locator.locator(`text=${this.selector.value}`);
+                break;
+            case 'name':
+                optionLocator = this.locator.locator(`[name="${this.selector.value}"]`);
                 break;
             default:
                 throw new Error(`Unsupported selector type: ${(this.selector as any).type}`);

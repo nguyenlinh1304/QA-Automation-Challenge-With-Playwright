@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { SignInPage } from '../../../models/pages';
 import { SIGN_IN, DASHBOARD } from '../../../configs/routes';
+import { DashboardPage } from '@models/pages/dashboard';
 
 test('[OD-1] Should successfully log in when input valid email address and password', async ({
     page
@@ -27,5 +28,8 @@ test('[OD-1] Should successfully log in when input valid email address and passw
     await test.step('Click Login', async () => {
         await currentPage.elements.submit.click();
         await expect(page).toHaveURL(DASHBOARD.path);
+        const dashboardPage = new DashboardPage(page);
+        await dashboardPage.expectPageTitleToBeVisible()
+        await dashboardPage.expectPageTitle('Dashboard')
     });
 });

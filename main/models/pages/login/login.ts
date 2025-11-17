@@ -18,4 +18,5 @@ export class SignInPage extends BaseModel<Elements> {
     async goto() {
         await this.page.goto(SIGN_IN.path);
     }
+
 }
