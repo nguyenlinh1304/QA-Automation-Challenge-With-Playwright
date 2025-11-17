@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import { SignInPage } from '../../../models/pages';
 import { SIGN_IN } from '../../../configs/routes';
 
-test('[OD-3] Should show error message when login with wrong email address/password', async ({
+test('[OD-3] Verify error message on login with non-existent username', async ({
     page
 }) => {
     const currentPage = new SignInPage(page);

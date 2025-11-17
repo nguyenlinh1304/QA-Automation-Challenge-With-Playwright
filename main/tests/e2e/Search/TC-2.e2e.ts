@@ -9,7 +9,7 @@ test.beforeEach(async ({ page }) => {
     await auth.login();
 });
 
-test('[OD-2] Should successfully search user by Username ', async ({
+test('[OD-2] Verify search returns correct user when searching by exact username ', async ({
     page
 }) => {
     const commonPage = new CommonPage(page);

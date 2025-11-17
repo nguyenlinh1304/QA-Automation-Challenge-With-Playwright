@@ -3,7 +3,7 @@ import { SignInPage } from '../../../models/pages';
 import { SIGN_IN, DASHBOARD } from '../../../configs/routes';
 import { DashboardPage } from '@models/pages/dashboard';
 
-test('[OD-1] Should successfully log in when input valid email address and password', async ({
+test('[OD-1] Verify user can login with valid username and password', async ({
     page
 }) => {
     const currentPage = new SignInPage(page);
