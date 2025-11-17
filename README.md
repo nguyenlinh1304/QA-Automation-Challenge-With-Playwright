@@ -418,23 +418,14 @@ The workflow integrates with Qase TestOps for test management:
 #### Post-Run Script (`post-qase-run`)
 - Reads test results from `result.json`
 - Extracts test case IDs from test titles (format: `[OD-X]` or `[TC-X]`)
-- Posts individual test results to Qase with comprehensive failure details
+- Posts individual test results to Qase with stack trace for failed tests
 - Completes the Qase test run
 
-**Detailed Failure Information Sent to Qase:**
+**Failure Information Sent to Qase:**
 
-For failed tests, the script automatically includes the following information in the Qase comment field:
-- **Error Message**: The primary error message
-- **Stack Trace**: Full stack trace showing the error path
-- **Error Location**: Code snippet showing where the error occurred
-- **File Location**: Exact file path, line number, and column
-- **Test Duration**: How long the test took to execute (in seconds)
-- **Attachments**: References to screenshots, videos, traces, and error context files
-- **Console Output**: Any stdout from the test execution
-- **Error Output**: Any stderr from the test execution
-- **Additional Errors**: Multiple errors if the test had multiple failures
-
-All ANSI color codes are cleaned from the output for better readability in Qase. The comment is formatted in Markdown for easy reading.
+For failed tests, the script automatically includes the **stack trace** in the Qase comment field:
+- Full stack trace showing the error path and execution flow
+- ANSI color codes are cleaned from the output for better readability in Qase
 
 #### Test Case ID Format
 
@@ -489,14 +480,9 @@ Use sequential execution when:
 
 - Tests continue running even if individual tests fail (`continue-on-error: true`)
 - All test results are posted to Qase regardless of pass/fail status
-- **Comprehensive failure details** are automatically sent to Qase including:
-  - Error messages, stack traces, and code snippets
-  - File locations with line numbers
-  - Test duration and timing information
-  - References to screenshots, videos, and traces
-  - Console output (stdout/stderr)
-- Artifacts are always collected for debugging
-- Workflow reports success even with test failures (check Qase for detailed failure information)
+- **Stack trace** is automatically sent to Qase for failed tests
+- Artifacts are always collected for debugging (screenshots, videos, traces)
+- Workflow reports success even with test failures (check Qase for stack trace details)
 
 ### Best Practices
 
