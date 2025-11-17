@@ -18,5 +18,5 @@ test('[OD-2] Should successfully search user by Username ', async ({
     const userManagementPage = new UserManagementPage(page);
     await userManagementPage.searchUsersByUsername('Admin');
     await userManagementPage.clickSearchButton();
-    await userManagementPage.verifyAllUsernamesMatchSearch('Admin');
+    await userManagementPage.verifyAllUsernamesMatchSearch('Admin123');
 });
