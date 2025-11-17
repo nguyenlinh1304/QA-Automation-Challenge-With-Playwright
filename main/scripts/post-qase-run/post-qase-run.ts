@@ -33,6 +33,7 @@ dotenv.config({
       for (const test of tests) {
         const case_id = Number(title.match(/\[(?:[^\d]*)(\d+)\]/)?.[1]);
 
+        console.log('Test:', test?.results);
         await qase.results.createResult(OD, runId, {
           case_id,
           status: test?.results?.[0]?.status ?? "failed",

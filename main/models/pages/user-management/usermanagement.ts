@@ -43,11 +43,9 @@ export class UserManagementPage extends BaseModel<Elements> {
         for (let i = 0; i < count; i++) {
             const text = await this.elements.usernameCells.nth(i).innerText();
             const trimmed = (text ?? '').trim();
-            usernames.push(trimmed);
-
-            if (!trimmed.includes(username)) {
-                throw new Error(`Username mismatch: expected "${username}", found "${trimmed}"`);
-            }
+            // usernames.push(trimmed);
+            expect(trimmed).toEqual(username);
         }
+
     }
 }
