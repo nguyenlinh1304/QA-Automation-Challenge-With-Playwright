@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { SignInPage } from '../../../models/pages';
-import { SIGN_IN, DASHBOARD } from '../../../configs/routes';
+import { SIGN_IN } from '../../../configs/routes';
 
 test('[OD-3] Should show error message when login with wrong email address/password', async ({
     page
