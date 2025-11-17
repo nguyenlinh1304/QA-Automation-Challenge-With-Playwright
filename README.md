@@ -211,8 +211,8 @@ pnpm install
 1. Copy `.env.example` to `.env` (if exists)
 2. Set required environment variables:
    - `BASE_URL`: Application URL to test
-   - `QASE_TESTOPS_API_TOKEN`: Qase API token (if using Qase)
-   - `QASE_TESTOPS_PLAN_ID`: Qase test plan ID
+   - `QASE_TESTOPS_API_TOKEN`: Qase API token (if using Qase for test management)
+   - `QASE_TESTOPS_PLAN_ID`: Qase test plan ID (only required for CI/CD runs)
 
 ### Running Tests
 
