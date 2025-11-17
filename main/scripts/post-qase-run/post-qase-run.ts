@@ -35,10 +35,18 @@ dotenv.config({
 
         console.log('Test:', test?.results);
         const status = test?.results?.[0]?.status ?? "failed";
+        let comment = test?.results?.[0]?.errors?.join('\n') || '';
+
+        // Add stack trace for failed cases
+        if (status === 'failed' && test?.results?.[0]?.error?.stack) {
+          const cleanStack = test.results[0].error.stack.replace(/\u001b\[[0-9;]*m/g, '');
+          comment = comment ? `${comment}\n\nStack Trace:\n${cleanStack}` : cleanStack;
+        }
+
         await qase.results.createResult(OD, runId, {
           case_id,
           status,
-          comment: test?.results?.[0]?.errors?.join('\n') || '',
+          comment,
         });
         console.log(`[post-qase-run] Posted result for case ${case_id}: ${status}`);
       }
