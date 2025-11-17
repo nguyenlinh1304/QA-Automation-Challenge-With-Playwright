@@ -321,6 +321,191 @@ Targets defined in `project.json`:
 - `pre:qase-run`: Create Qase test run before execution
 - `post:qase-run`: Update Qase after test execution
 
+## CI/CD with GitHub Actions
+
+The framework includes a GitHub Actions workflow for automated test execution in CI/CD pipelines with Qase TestOps integration.
+
+### Workflow Overview
+
+The `Regression Test Run` workflow (`.github/workflows/e2e-run.yml`) provides:
+- Manual workflow dispatch with configurable parameters
+- Multi-browser testing (Chromium, Firefox, WebKit)
+- Qase TestOps integration for test tracking and reporting
+- Artifact collection (screenshots, videos, traces)
+- Parallel or sequential test execution
+
+### Setup
+
+#### 1. GitHub Secrets Configuration
+
+Configure the following secrets in your GitHub repository settings (`Settings` → `Secrets and variables` → `Actions`):
+
+**Required Secrets:**
+- `QASE_TESTOPS_API_TOKEN`: Your Qase API token for authentication
+
+**Optional Secrets (if using environment-specific URLs):**
+- `BASE_URL_TEST`: Base URL for test environment
+- `BASE_URL_STAGING`: Base URL for staging environment
+- `BASE_URL_PRODUCTION`: Base URL for production environment
+
+#### 2. Environment Variables
+
+The workflow uses environment variables that can be set as GitHub Secrets or in the workflow file:
+- `BASE_URL`: Application URL (can be environment-specific)
+- `NEXT_PUBLIC_STAGE`: Environment slug for Qase reporting
+
+### Workflow Inputs
+
+When triggering the workflow manually, you can configure:
+
+| Input | Description | Required | Options | Default |
+|-------|-------------|----------|---------|---------|
+| `plan_id` | Qase Test Plan ID | Yes | Any valid plan ID | - |
+| `environment` | Environment to test | No | `test`, `staging`, `production` | `test` |
+| `browser` | Browser to run tests | No | `chromium`, `firefox`, `webkit`, `all` | `chromium` |
+| `run_parallel` | Run tests in parallel | No | `true`, `false` | `true` |
+
+### Triggering the Workflow
+
+#### Manual Trigger
+
+1. Go to the **Actions** tab in your GitHub repository
+2. Select **Regression Test Run** workflow
+3. Click **Run workflow**
+4. Fill in the required inputs:
+   - **Regression Test Plan**: Enter your Qase test plan ID
+   - **Environment**: Select target environment
+   - **Browser**: Choose browser(s) to test
+   - **Run tests in parallel**: Enable/disable parallel execution
+5. Click **Run workflow**
+
+#### Scheduled Trigger (Optional)
+
+To add scheduled runs, modify the workflow file:
+
+```yaml
+on:
+  workflow_dispatch:
+    # ... existing inputs
+  schedule:
+    - cron: '0 0 * * *'  # Daily at midnight UTC
+```
+
+### Workflow Steps
+
+The workflow executes the following steps:
+
+1. **Checkout code** - Retrieves the latest code from the repository
+2. **Setup Node.js** - Installs Node.js 20.x and caches npm dependencies
+3. **Determine project directory** - Detects the project structure (root or `main/` directory)
+4. **Install dependencies** - Runs `npm ci` to install all dependencies
+5. **Install Playwright browsers** - Installs specified browser(s) with system dependencies
+6. **Setup environment variables** - Configures environment variables based on selected environment
+7. **Pre-Qase Run** - Creates a test run in Qase TestOps and stores the run ID
+8. **Run Playwright tests** - Executes tests based on selected browser and parallelization settings
+9. **Post-Qase Run** - Posts test results to Qase and completes the test run
+
+### Qase Integration
+
+The workflow integrates with Qase TestOps for test management:
+
+#### Pre-Run Script (`pre-qase-run`)
+- Creates a new test run in Qase using the provided plan ID
+- Generates run title with date, plan title, and GitHub run ID
+- Stores the Qase run ID for later reference
+- Sets environment slug based on the selected environment
+
+#### Post-Run Script (`post-qase-run`)
+- Reads test results from `result.json`
+- Extracts test case IDs from test titles (format: `[OD-X]` or `[TC-X]`)
+- Posts individual test results to Qase with comprehensive failure details
+- Completes the Qase test run
+
+**Detailed Failure Information Sent to Qase:**
+
+For failed tests, the script automatically includes the following information in the Qase comment field:
+- **Error Message**: The primary error message
+- **Stack Trace**: Full stack trace showing the error path
+- **Error Location**: Code snippet showing where the error occurred
+- **File Location**: Exact file path, line number, and column
+- **Test Duration**: How long the test took to execute (in seconds)
+- **Attachments**: References to screenshots, videos, traces, and error context files
+- **Console Output**: Any stdout from the test execution
+- **Error Output**: Any stderr from the test execution
+- **Additional Errors**: Multiple errors if the test had multiple failures
+
+All ANSI color codes are cleaned from the output for better readability in Qase. The comment is formatted in Markdown for easy reading.
+
+#### Test Case ID Format
+
+Tests must include a test case ID in their title to be tracked in Qase:
+
+```typescript
+test('[OD-1] Should successfully log in', async ({ page }) => {
+    // Test implementation
+});
+```
+
+The pattern `\[(?:[^\d]*)(\d+)\]` extracts the numeric ID from the title.
+
+### Workflow Artifacts
+
+Test execution artifacts are automatically collected:
+- **Screenshots**: Captured on test failure
+- **Videos**: Recorded for all test runs
+- **Traces**: Playwright traces for debugging failed tests
+- **JSON Report**: Test results in JSON format (`result.json`)
+
+These can be downloaded from the workflow run page in GitHub Actions.
+
+### Environment Configuration
+
+The workflow supports multiple environments through the `environment` input:
+
+- **test**: Default environment for development testing
+- **staging**: Pre-production environment
+- **production**: Production environment
+
+Each environment can have its own `BASE_URL` configured as a GitHub Secret (e.g., `BASE_URL_STAGING`).
+
+### Browser Configuration
+
+You can test on one or all supported browsers:
+
+- **Single Browser**: Select `chromium`, `firefox`, or `webkit` for faster execution
+- **All Browsers**: Select `all` to run tests across Chromium, Firefox, and WebKit in parallel
+
+### Parallel vs Sequential Execution
+
+- **Parallel** (`run_parallel: true`): Tests run concurrently for faster execution (default)
+- **Sequential** (`run_parallel: false`): Tests run one at a time with `--workers=1`
+
+Use sequential execution when:
+- Debugging flaky tests
+- Resource-intensive tests that conflict when run in parallel
+- Tests that modify shared resources
+
+### Error Handling
+
+- Tests continue running even if individual tests fail (`continue-on-error: true`)
+- All test results are posted to Qase regardless of pass/fail status
+- **Comprehensive failure details** are automatically sent to Qase including:
+  - Error messages, stack traces, and code snippets
+  - File locations with line numbers
+  - Test duration and timing information
+  - References to screenshots, videos, and traces
+  - Console output (stdout/stderr)
+- Artifacts are always collected for debugging
+- Workflow reports success even with test failures (check Qase for detailed failure information)
+
+### Best Practices
+
+1. **Use Descriptive Test Titles**: Include test case IDs in format `[OD-X]` for Qase tracking
+2. **Set Appropriate Timeouts**: Default timeout is 60 minutes, adjust if needed
+3. **Monitor Resource Usage**: Use parallel execution judiciously to avoid resource exhaustion
+4. **Review Qase Reports**: Check Qase TestOps for comprehensive test execution reports
+5. **Download Artifacts**: Download traces and videos from failed test runs for debugging
+
 ## Testing Strategy
 
 ### Test Organization
