@@ -379,18 +379,6 @@ When triggering the workflow manually, you can configure:
    - **Run tests in parallel**: Enable/disable parallel execution
 5. Click **Run workflow**
 
-#### Scheduled Trigger (Optional)
-
-To add scheduled runs, modify the workflow file:
-
-```yaml
-on:
-  workflow_dispatch:
-    # ... existing inputs
-  schedule:
-    - cron: '0 0 * * *'  # Daily at midnight UTC
-```
-
 ### Workflow Steps
 
 The workflow executes the following steps:
