@@ -11,7 +11,7 @@
     "grepInvert": null,
     "maxFailures": 0,
     "metadata": {
-      "actualWorkers": 1
+      "actualWorkers": 3
     },
     "preserveOutput": "always",
     "reporter": [
@@ -37,7 +37,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 1
+          "actualWorkers": 3
         },
         "id": "chromium",
         "name": "chromium",
@@ -53,7 +53,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 1
+          "actualWorkers": 3
         },
         "id": "firefox",
         "name": "firefox",
@@ -69,7 +69,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 1
+          "actualWorkers": 3
         },
         "id": "webkit",
         "name": "webkit",
@@ -90,13 +90,13 @@
   },
   "suites": [
     {
-      "title": "Search/TC-2.e2e.ts",
-      "file": "Search/TC-2.e2e.ts",
+      "title": "Authenticator/TC-1.e2e.ts",
+      "file": "Authenticator/TC-1.e2e.ts",
       "column": 0,
       "line": 0,
       "specs": [
         {
-          "title": "[OD-2] Should successfully search user by Username ",
+          "title": "[OD-1] Verify user can login with valid username and password",
           "ok": true,
           "tags": [],
           "tests": [
@@ -108,35 +108,49 @@
               "projectName": "chromium",
               "results": [
                 {
-                  "workerIndex": 12,
+                  "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 9051,
+                  "duration": 8294,
                   "errors": [],
-                  "stdout": [
-                    {
-                      "text": "All cookies: [\n  {\n    name: \u001b[32m'orangehrm'\u001b[39m,\n    value: \u001b[32m'bpb1a5m1a4ohk98riul2nttisc'\u001b[39m,\n    domain: \u001b[32m'opensource-demo.orangehrmlive.com'\u001b[39m,\n    path: \u001b[32m'/web'\u001b[39m,\n    expires: \u001b[33m-1\u001b[39m,\n    httpOnly: \u001b[33mtrue\u001b[39m,\n    secure: \u001b[33mtrue\u001b[39m,\n    sameSite: \u001b[32m'Lax'\u001b[39m\n  }\n]\n"
-                    }
-                  ],
+                  "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2025-11-17T18:54:37.016Z",
+                  "steps": [
+                    {
+                      "title": "Navigate to the page",
+                      "duration": 3371
+                    },
+                    {
+                      "title": "Input Username",
+                      "duration": 566
+                    },
+                    {
+                      "title": "Input Password",
+                      "duration": 273
+                    },
+                    {
+                      "title": "Click Login",
+                      "duration": 1990
+                    }
+                  ],
+                  "startTime": "2025-11-18T03:22:42.048Z",
                   "annotations": [],
                   "attachments": [
                     {
                       "name": "screenshot",
                       "contentType": "image/png",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Search-TC-2.e2e.ts--OD-2-S-e0722-ly-search-user-by-Username--chromium/test-finished-1.png"
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--6f784-valid-username-and-password-chromium/test-finished-1.png"
                     },
                     {
                       "name": "video",
                       "contentType": "video/webm",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Search-TC-2.e2e.ts--OD-2-S-e0722-ly-search-user-by-Username--chromium/video.webm"
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--6f784-valid-username-and-password-chromium/video.webm"
                     },
                     {
                       "name": "trace",
                       "contentType": "application/zip",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Search-TC-2.e2e.ts--OD-2-S-e0722-ly-search-user-by-Username--chromium/trace.zip"
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--6f784-valid-username-and-password-chromium/trace.zip"
                     }
                   ]
                 }
@@ -144,7 +158,141 @@
               "status": "expected"
             }
           ],
-          "id": "bb0e6cfe715731fcad6a-84910523b2184a99bac8",
+          "id": "479fdd01ab8c7e5ceaf1-fa93204ad9a22324cd8a",
+          "file": "Authenticator/TC-1.e2e.ts",
+          "line": 6,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "Authenticator/TC-3.e2e.ts",
+      "file": "Authenticator/TC-3.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "[OD-3] Verify error message on login with non-existent username",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 7393,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "Navigate to the page",
+                      "duration": 3400
+                    },
+                    {
+                      "title": "Input Username",
+                      "duration": 541
+                    },
+                    {
+                      "title": "Input Password",
+                      "duration": 265
+                    },
+                    {
+                      "title": "Click Login",
+                      "duration": 1406
+                    }
+                  ],
+                  "startTime": "2025-11-18T03:22:42.047Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-3.e2e.ts--29d2c--with-non-existent-username-chromium/test-finished-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-3.e2e.ts--29d2c--with-non-existent-username-chromium/video.webm"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-3.e2e.ts--29d2c--with-non-existent-username-chromium/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "10c8722f6ee52f8dfd66-2a65aa9359b2e353eca0",
+          "file": "Authenticator/TC-3.e2e.ts",
+          "line": 5,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "Search/TC-2.e2e.ts",
+      "file": "Search/TC-2.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "[OD-2] Verify search returns correct user when searching by exact username",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 9100,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2025-11-18T03:22:42.053Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Search-TC-2.e2e.ts--OD-2-V-f4da5-searching-by-exact-username-chromium/test-finished-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Search-TC-2.e2e.ts--OD-2-V-f4da5-searching-by-exact-username-chromium/video.webm"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Search-TC-2.e2e.ts--OD-2-V-f4da5-searching-by-exact-username-chromium/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bb0e6cfe715731fcad6a-7a5c309a75a03f88b1bb",
           "file": "Search/TC-2.e2e.ts",
           "line": 12,
           "column": 1
@@ -154,9 +302,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-11-17T18:54:35.511Z",
-    "duration": 11081.449999999953,
-    "expected": 1,
+    "startTime": "2025-11-18T03:22:40.122Z",
+    "duration": 12116.524,
+    "expected": 3,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0
