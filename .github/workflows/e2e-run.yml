@@ -13,7 +13,6 @@ on:
         type: choice
         options:
           - test
-          - staging
           - production
         default: 'test'
       browser:
