@@ -111,7 +111,7 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 8294,
+                  "duration": 8388,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
@@ -119,22 +119,22 @@
                   "steps": [
                     {
                       "title": "Navigate to the page",
-                      "duration": 3371
+                      "duration": 3841
                     },
                     {
                       "title": "Input Username",
-                      "duration": 566
+                      "duration": 346
                     },
                     {
                       "title": "Input Password",
-                      "duration": 273
+                      "duration": 232
                     },
                     {
                       "title": "Click Login",
-                      "duration": 1990
+                      "duration": 2237
                     }
                   ],
-                  "startTime": "2025-11-18T03:22:42.048Z",
+                  "startTime": "2025-11-18T03:32:38.887Z",
                   "annotations": [],
                   "attachments": [
                     {
@@ -187,7 +187,7 @@
                   "workerIndex": 1,
                   "parallelIndex": 1,
                   "status": "passed",
-                  "duration": 7393,
+                  "duration": 7276,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
@@ -195,22 +195,22 @@
                   "steps": [
                     {
                       "title": "Navigate to the page",
-                      "duration": 3400
+                      "duration": 3411
                     },
                     {
                       "title": "Input Username",
-                      "duration": 541
+                      "duration": 405
                     },
                     {
                       "title": "Input Password",
-                      "duration": 265
+                      "duration": 321
                     },
                     {
                       "title": "Click Login",
-                      "duration": 1406
+                      "duration": 1953
                     }
                   ],
-                  "startTime": "2025-11-18T03:22:42.047Z",
+                  "startTime": "2025-11-18T03:32:38.874Z",
                   "annotations": [],
                   "attachments": [
                     {
@@ -263,12 +263,12 @@
                   "workerIndex": 2,
                   "parallelIndex": 2,
                   "status": "passed",
-                  "duration": 9100,
+                  "duration": 9354,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2025-11-18T03:22:42.053Z",
+                  "startTime": "2025-11-18T03:32:38.890Z",
                   "annotations": [],
                   "attachments": [
                     {
@@ -302,8 +302,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-11-18T03:22:40.122Z",
-    "duration": 12116.524,
+    "startTime": "2025-11-18T03:32:37.193Z",
+    "duration": 11890.923999999999,
     "expected": 3,
     "skipped": 0,
     "unexpected": 0,

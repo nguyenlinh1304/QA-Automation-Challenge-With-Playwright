@@ -18,5 +18,5 @@ test('[OD-2] Verify search returns correct user when searching by exact username
     const userManagementPage = new UserManagementPage(page);
     await userManagementPage.searchUsersByUsername('Admin');
     await userManagementPage.clickSearchButton();
-    await userManagementPage.verifyAllUsernamesMatchSearch('Admin');
+    await userManagementPage.verifyAllUsernamesMatchSearch('Admin123');
 });
