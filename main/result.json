@@ -11,7 +11,7 @@
     "grepInvert": null,
     "maxFailures": 0,
     "metadata": {
-      "actualWorkers": 3
+      "actualWorkers": 1
     },
     "preserveOutput": "always",
     "reporter": [
@@ -37,7 +37,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 3
+          "actualWorkers": 1
         },
         "id": "chromium",
         "name": "chromium",
@@ -53,7 +53,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 3
+          "actualWorkers": 1
         },
         "id": "firefox",
         "name": "firefox",
@@ -69,7 +69,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 3
+          "actualWorkers": 1
         },
         "id": "webkit",
         "name": "webkit",
@@ -111,7 +111,7 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 7564,
+                  "duration": 7147,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
@@ -119,22 +119,22 @@
                   "steps": [
                     {
                       "title": "Navigate to the page",
-                      "duration": 3530
+                      "duration": 3171
                     },
                     {
                       "title": "Input Username",
-                      "duration": 428
+                      "duration": 404
                     },
                     {
                       "title": "Input Password",
-                      "duration": 79
+                      "duration": 77
                     },
                     {
                       "title": "Click Login",
-                      "duration": 2356
+                      "duration": 2475
                     }
                   ],
-                  "startTime": "2025-11-18T05:09:45.677Z",
+                  "startTime": "2025-11-18T05:28:06.785Z",
                   "annotations": [],
                   "attachments": [
                     {
@@ -162,151 +162,15 @@
           "file": "Authenticator/TC-1.e2e.ts",
           "line": 6,
           "column": 1
-        },
-        {
-          "title": "[OD-1] Verify user can login with valid username and password",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 30000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "firefox",
-              "projectName": "firefox",
-              "results": [
-                {
-                  "workerIndex": 1,
-                  "parallelIndex": 1,
-                  "status": "passed",
-                  "duration": 9829,
-                  "errors": [],
-                  "stdout": [],
-                  "stderr": [],
-                  "retry": 0,
-                  "steps": [
-                    {
-                      "title": "Navigate to the page",
-                      "duration": 3593
-                    },
-                    {
-                      "title": "Input Username",
-                      "duration": 548
-                    },
-                    {
-                      "title": "Input Password",
-                      "duration": 115
-                    },
-                    {
-                      "title": "Click Login",
-                      "duration": 2842
-                    }
-                  ],
-                  "startTime": "2025-11-18T05:09:45.674Z",
-                  "annotations": [],
-                  "attachments": [
-                    {
-                      "name": "screenshot",
-                      "contentType": "image/png",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--6f784-valid-username-and-password-firefox/test-finished-1.png"
-                    },
-                    {
-                      "name": "video",
-                      "contentType": "video/webm",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--6f784-valid-username-and-password-firefox/video.webm"
-                    },
-                    {
-                      "name": "trace",
-                      "contentType": "application/zip",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--6f784-valid-username-and-password-firefox/trace.zip"
-                    }
-                  ]
-                }
-              ],
-              "status": "expected"
-            }
-          ],
-          "id": "479fdd01ab8c7e5ceaf1-2ef81508bfd24c9711dc",
-          "file": "Authenticator/TC-1.e2e.ts",
-          "line": 6,
-          "column": 1
-        },
-        {
-          "title": "[OD-1] Verify user can login with valid username and password",
-          "ok": true,
-          "tags": [],
-          "tests": [
-            {
-              "timeout": 30000,
-              "annotations": [],
-              "expectedStatus": "passed",
-              "projectId": "webkit",
-              "projectName": "webkit",
-              "results": [
-                {
-                  "workerIndex": 2,
-                  "parallelIndex": 2,
-                  "status": "passed",
-                  "duration": 10316,
-                  "errors": [],
-                  "stdout": [],
-                  "stderr": [],
-                  "retry": 0,
-                  "steps": [
-                    {
-                      "title": "Navigate to the page",
-                      "duration": 3535
-                    },
-                    {
-                      "title": "Input Username",
-                      "duration": 1494
-                    },
-                    {
-                      "title": "Input Password",
-                      "duration": 105
-                    },
-                    {
-                      "title": "Click Login",
-                      "duration": 1827
-                    }
-                  ],
-                  "startTime": "2025-11-18T05:09:45.678Z",
-                  "annotations": [],
-                  "attachments": [
-                    {
-                      "name": "screenshot",
-                      "contentType": "image/png",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--6f784-valid-username-and-password-webkit/test-finished-1.png"
-                    },
-                    {
-                      "name": "video",
-                      "contentType": "video/webm",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--6f784-valid-username-and-password-webkit/video.webm"
-                    },
-                    {
-                      "name": "trace",
-                      "contentType": "application/zip",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--6f784-valid-username-and-password-webkit/trace.zip"
-                    }
-                  ]
-                }
-              ],
-              "status": "expected"
-            }
-          ],
-          "id": "479fdd01ab8c7e5ceaf1-7ee5567393cd391364d2",
-          "file": "Authenticator/TC-1.e2e.ts",
-          "line": 6,
-          "column": 1
         }
       ]
     }
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-11-18T05:09:44.811Z",
-    "duration": 13559.133,
-    "expected": 3,
+    "startTime": "2025-11-18T05:28:05.926Z",
+    "duration": 8608.874,
+    "expected": 1,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

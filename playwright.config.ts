@@ -15,6 +15,7 @@ dotenv.config({
 
 export default defineConfig({
     fullyParallel: true,
+    workers: process.env.CI ? 2 : undefined,
     retries: process.env.CI ? 1 : 0,
     testMatch: ['**/*.e2e.ts'],
     testDir: path.join(mainDir, 'tests/e2e'),
