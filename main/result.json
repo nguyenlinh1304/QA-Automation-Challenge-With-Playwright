@@ -11,7 +11,7 @@
     "grepInvert": null,
     "maxFailures": 0,
     "metadata": {
-      "actualWorkers": 1
+      "actualWorkers": 3
     },
     "preserveOutput": "always",
     "reporter": [
@@ -37,7 +37,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 1
+          "actualWorkers": 3
         },
         "id": "chromium",
         "name": "chromium",
@@ -53,7 +53,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 1
+          "actualWorkers": 3
         },
         "id": "firefox",
         "name": "firefox",
@@ -69,7 +69,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 1
+          "actualWorkers": 3
         },
         "id": "webkit",
         "name": "webkit",
@@ -90,14 +90,14 @@
   },
   "suites": [
     {
-      "title": "Search/TC-2.e2e.ts",
-      "file": "Search/TC-2.e2e.ts",
+      "title": "Authenticator/TC-1.e2e.ts",
+      "file": "Authenticator/TC-1.e2e.ts",
       "column": 0,
       "line": 0,
       "specs": [
         {
-          "title": "[OD-2] Should successfully search user by Username ",
-          "ok": false,
+          "title": "[OD-1] Verify user can login with valid username and password",
+          "ok": true,
           "tags": [],
           "tests": [
             {
@@ -110,72 +110,193 @@
                 {
                   "workerIndex": 0,
                   "parallelIndex": 0,
-                  "status": "failed",
-                  "duration": 20004,
-                  "error": {
-                    "message": "Error: Username mismatch: expected \"Admin123\", found \"Admin\"",
-                    "stack": "Error: Username mismatch: expected \"Admin123\", found \"Admin\"\n    at UserManagementPage.verifyAllUsernamesMatchSearch (/Users/apple/Desktop/DEMO/main/models/pages/user-management/usermanagement.ts:49:23)\n    at /Users/apple/Desktop/DEMO/main/tests/e2e/Search/TC-2.e2e.ts:21:5",
-                    "location": {
-                      "file": "/Users/apple/Desktop/DEMO/main/models/pages/user-management/usermanagement.ts",
-                      "column": 23,
-                      "line": 49
-                    },
-                    "snippet": "\u001b[90m   at \u001b[39m../../models/pages/user-management/usermanagement.ts:49\n\n\u001b[0m \u001b[90m 47 |\u001b[39m\n \u001b[90m 48 |\u001b[39m             \u001b[36mif\u001b[39m (\u001b[33m!\u001b[39mtrimmed\u001b[33m.\u001b[39mincludes(username)) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 49 |\u001b[39m                 \u001b[36mthrow\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m`Username mismatch: expected \"${username}\", found \"${trimmed}\"`\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 50 |\u001b[39m             }\n \u001b[90m 51 |\u001b[39m         }\n \u001b[90m 52 |\u001b[39m     }\u001b[0m"
-                  },
-                  "errors": [
-                    {
-                      "location": {
-                        "file": "/Users/apple/Desktop/DEMO/main/models/pages/user-management/usermanagement.ts",
-                        "column": 23,
-                        "line": 49
-                      },
-                      "message": "Error: Username mismatch: expected \"Admin123\", found \"Admin\"\n\n\u001b[90m   at \u001b[39m../../models/pages/user-management/usermanagement.ts:49\n\n\u001b[0m \u001b[90m 47 |\u001b[39m\n \u001b[90m 48 |\u001b[39m             \u001b[36mif\u001b[39m (\u001b[33m!\u001b[39mtrimmed\u001b[33m.\u001b[39mincludes(username)) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 49 |\u001b[39m                 \u001b[36mthrow\u001b[39m \u001b[36mnew\u001b[39m \u001b[33mError\u001b[39m(\u001b[32m`Username mismatch: expected \"${username}\", found \"${trimmed}\"`\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                       \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 50 |\u001b[39m             }\n \u001b[90m 51 |\u001b[39m         }\n \u001b[90m 52 |\u001b[39m     }\u001b[0m\n\u001b[2m    at UserManagementPage.verifyAllUsernamesMatchSearch (/Users/apple/Desktop/DEMO/main/models/pages/user-management/usermanagement.ts:49:23)\u001b[22m\n\u001b[2m    at /Users/apple/Desktop/DEMO/main/tests/e2e/Search/TC-2.e2e.ts:21:5\u001b[22m"
-                    }
-                  ],
-                  "stdout": [
-                    {
-                      "text": "All cookies: [\n  {\n    name: \u001b[32m'orangehrm'\u001b[39m,\n    value: \u001b[32m'spqh1jnnbi1tcm8b6kfcjnmde1'\u001b[39m,\n    domain: \u001b[32m'opensource-demo.orangehrmlive.com'\u001b[39m,\n    path: \u001b[32m'/web'\u001b[39m,\n    expires: \u001b[33m-1\u001b[39m,\n    httpOnly: \u001b[33mtrue\u001b[39m,\n    secure: \u001b[33mtrue\u001b[39m,\n    sameSite: \u001b[32m'Lax'\u001b[39m\n  }\n]\n"
-                    }
-                  ],
+                  "status": "passed",
+                  "duration": 7564,
+                  "errors": [],
+                  "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2025-11-17T16:58:30.808Z",
+                  "steps": [
+                    {
+                      "title": "Navigate to the page",
+                      "duration": 3530
+                    },
+                    {
+                      "title": "Input Username",
+                      "duration": 428
+                    },
+                    {
+                      "title": "Input Password",
+                      "duration": 79
+                    },
+                    {
+                      "title": "Click Login",
+                      "duration": 2356
+                    }
+                  ],
+                  "startTime": "2025-11-18T05:09:45.677Z",
                   "annotations": [],
                   "attachments": [
                     {
                       "name": "screenshot",
                       "contentType": "image/png",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Search-TC-2.e2e.ts--OD-2-S-e0722-ly-search-user-by-Username--chromium/test-failed-1.png"
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--6f784-valid-username-and-password-chromium/test-finished-1.png"
                     },
                     {
                       "name": "video",
                       "contentType": "video/webm",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Search-TC-2.e2e.ts--OD-2-S-e0722-ly-search-user-by-Username--chromium/video.webm"
-                    },
-                    {
-                      "name": "error-context",
-                      "contentType": "text/markdown",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Search-TC-2.e2e.ts--OD-2-S-e0722-ly-search-user-by-Username--chromium/error-context.md"
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--6f784-valid-username-and-password-chromium/video.webm"
                     },
                     {
                       "name": "trace",
                       "contentType": "application/zip",
-                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Search-TC-2.e2e.ts--OD-2-S-e0722-ly-search-user-by-Username--chromium/trace.zip"
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--6f784-valid-username-and-password-chromium/trace.zip"
                     }
-                  ],
-                  "errorLocation": {
-                    "file": "/Users/apple/Desktop/DEMO/main/models/pages/user-management/usermanagement.ts",
-                    "column": 23,
-                    "line": 49
-                  }
+                  ]
                 }
               ],
-              "status": "unexpected"
+              "status": "expected"
             }
           ],
-          "id": "bb0e6cfe715731fcad6a-84910523b2184a99bac8",
-          "file": "Search/TC-2.e2e.ts",
-          "line": 12,
+          "id": "479fdd01ab8c7e5ceaf1-fa93204ad9a22324cd8a",
+          "file": "Authenticator/TC-1.e2e.ts",
+          "line": 6,
+          "column": 1
+        },
+        {
+          "title": "[OD-1] Verify user can login with valid username and password",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "firefox",
+              "projectName": "firefox",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 9829,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "Navigate to the page",
+                      "duration": 3593
+                    },
+                    {
+                      "title": "Input Username",
+                      "duration": 548
+                    },
+                    {
+                      "title": "Input Password",
+                      "duration": 115
+                    },
+                    {
+                      "title": "Click Login",
+                      "duration": 2842
+                    }
+                  ],
+                  "startTime": "2025-11-18T05:09:45.674Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--6f784-valid-username-and-password-firefox/test-finished-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--6f784-valid-username-and-password-firefox/video.webm"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--6f784-valid-username-and-password-firefox/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "479fdd01ab8c7e5ceaf1-2ef81508bfd24c9711dc",
+          "file": "Authenticator/TC-1.e2e.ts",
+          "line": 6,
+          "column": 1
+        },
+        {
+          "title": "[OD-1] Verify user can login with valid username and password",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 10316,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "Navigate to the page",
+                      "duration": 3535
+                    },
+                    {
+                      "title": "Input Username",
+                      "duration": 1494
+                    },
+                    {
+                      "title": "Input Password",
+                      "duration": 105
+                    },
+                    {
+                      "title": "Click Login",
+                      "duration": 1827
+                    }
+                  ],
+                  "startTime": "2025-11-18T05:09:45.678Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--6f784-valid-username-and-password-webkit/test-finished-1.png"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--6f784-valid-username-and-password-webkit/video.webm"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/apple/Desktop/DEMO/main/result/test-results/Authenticator-TC-1.e2e.ts--6f784-valid-username-and-password-webkit/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "479fdd01ab8c7e5ceaf1-7ee5567393cd391364d2",
+          "file": "Authenticator/TC-1.e2e.ts",
+          "line": 6,
           "column": 1
         }
       ]
@@ -183,11 +304,11 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-11-17T16:58:29.400Z",
-    "duration": 22164.519999999997,
-    "expected": 0,
+    "startTime": "2025-11-18T05:09:44.811Z",
+    "duration": 13559.133,
+    "expected": 3,
     "skipped": 0,
-    "unexpected": 1,
+    "unexpected": 0,
     "flaky": 0
   }
 }
