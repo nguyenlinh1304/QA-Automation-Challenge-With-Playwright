@@ -405,7 +405,7 @@ The workflow integrates with Qase TestOps for test management:
 
 #### Post-Run Script (`post-qase-run`)
 - Reads test results from `result.json`
-- Extracts test case IDs from test titles (format: `[OD-X]` or `[TC-X]`)
+- Extracts test case IDs from test titles (format: `[OD-X]`)
 - Posts individual test results to Qase with stack trace for failed tests
 - Completes the Qase test run
 
@@ -442,7 +442,6 @@ These can be downloaded from the workflow run page in GitHub Actions.
 The workflow supports multiple environments through the `environment` input:
 
 - **test**: Default environment for development testing
-- **staging**: Pre-production environment
 - **production**: Production environment
 
 Each environment can have its own `BASE_URL` configured as a GitHub Secret (e.g., `BASE_URL_STAGING`).
